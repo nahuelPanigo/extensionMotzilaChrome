@@ -1,0 +1,22 @@
+body{
+	background-color: #292a2d;
+	color:#5f6368;
+	width: 250px;
+	text-decoration: none;
+}
+h1{
+	font-size: 25px;
+	text-align: center;
+	margin:30px 25px; 
+	padding:3;
+
+}
+a {
+	color: #5f6368;
+	text-decoration: none;
+}
+
+.resultados{
+	font-size: 18px;
+	text-decoration: none;
+}

@@ -1,0 +1,55 @@
+{
+	"name": "my_first_extensions",
+	"version": "1.0",
+	"manifest_version": 2,
+	"description": "make an extension",
+	"icons": {"128":"images/icon128.png"},
+	
+	"applications":{
+		"gecko":{
+			"id":"my_first_extensions@nahuel"
+		}
+	},
+	"web_accessible_resources":[
+		"logos/*.png"
+	],
+	"browser_action":{
+		"default_icon":{
+		"16":"images/icon16.png",
+		"24":"images/icon24.png",
+		"32":"images/icon32.png"
+		},
+		"default_popup":"popup.html",
+		"default_title": "first extension"
+	},
+	"background":{
+		"scripts":[
+					"node_modules/webextension-polyfill/dist/browser-polyfill.js",
+					"conector.js",
+					"background.js"
+				  ]
+	},
+		"content_scripts":[
+			{
+				"matches":["https://duckduckgo.com/html/*","https://www.google.com/search*","https://www.bing.com/search*","https://duckduckgo.com/?q*"],
+				"js":[
+						"node_modules/webextension-polyfill/dist/browser-polyfill.js",
+						"node_modules/compromise/builds/compromise.es6.js",
+						"node_modules/jquery/dist/jquery.min.js",
+						"node_modules/jqcloud2/dist/jqcloud.min.js",
+						"contentScript.js"
+					]
+			}
+		],
+
+	"permissions":[
+		"https://www.google.com/search*",
+		"https://www.bing.com/search*",
+		"https://duckduckgo.com/?q*",
+		"https://duckduckgo.com/html/*",
+		"storage",
+		"webRequest",
+		"activeTab",
+		"tabs"
+	]
+}
