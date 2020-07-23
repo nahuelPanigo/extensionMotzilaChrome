@@ -1,5 +1,6 @@
 class Google{
 	makeRequests(value,back){
+		console.log("roberto");
 		return new Promise((resolve,reject)=>{ 
 		var string1="https://www.bing.com/search?q=";
 		var string2="https://duckduckgo.com/html/?q=";
@@ -108,19 +109,19 @@ peers =[];
 engine;
 search;
 	setEngine(eng){
-		engine=eng;
+		this.engine=eng;
 	}
 
 	getEngine(){
-		return engine;
+		return this.engine;
 	}
 
 	setSearch(Asearch){
-		engine=Asearch;
+		this.search=Asearch;
 	}
 
 	getSearch(){
-		return search;
+		return this.search;
 	}
 
 
@@ -189,7 +190,7 @@ search;
 	}
 
 	getResultsFromPeers(){
-		console.log('results from peers');
+		console.log(+'results from peers');
 		//let username = this.peers[0].username;
 		try {
 			this.sendRequest({
@@ -233,23 +234,23 @@ search;
 
 
 	searchNewRequest(value){
-		return new Promise((resolve,reject)=>{
+			return new Promise((resolve,reject)=>{
 			this.setSearch(value.req);
 			if(value.engine.match('https://www.google')){
-				engine = new Google();
-				engine.makeRequests(value,this).then((pr)=>{
+				this.engine = new Google();
+				this.engine.makeRequests(value,this).then((pr)=>{
 					resolve(pr)
 			});
 			}else{
 				if(value.engine.match('https://www.bing')){
-					engine = new Bing();
-					engine.makeRequests(value,this).then((pr)=>{
+					this.engine = new Bing();
+					this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
 					});
 				}
 				else{
-					engine =new Duck();
-					engine.makeRequests(value,this).then((pr)=>{
+					this.engine =new Duck();
+					this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
 					});
 				}
@@ -278,7 +279,7 @@ search;
 var extension;
 
 var startBackground = async function(config) { 
-	  var extension = new BackgroundExtension();
+	 extension = new BackgroundExtension();
 	  extension.connect();
 	  var promise;
 	  await extension.getPeers(extension.setPeers);

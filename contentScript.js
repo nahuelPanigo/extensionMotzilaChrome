@@ -3,9 +3,9 @@ class ContentPageManager {
 	equal;
 
 	initializeEqual(){
-		equal=new Array(5);
+		this.equal=new Array(5);
 		for (var i=0;i<5;i++){
-			equal[i]=0;
+			this.equal[i]=0;
 		}
 	}
 	
@@ -189,6 +189,8 @@ class ContentPageManager {
 
 }
 
+
+
 let filesG=[
 "logos/google1.png",
 "logos/google2.png",
@@ -229,7 +231,7 @@ let filesP=[
 ]
 let col=[filesG,filesB,filesD]
 var pageManager = new ContentPageManager();
-this.initializeEqual();
+pageManager.initializeEqual();
 var peer=0;
 var array;
 pageManager.getResults(col).then(requ=>{

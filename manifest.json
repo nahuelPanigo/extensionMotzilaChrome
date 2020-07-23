@@ -43,10 +43,7 @@
 		],
 
 	"permissions":[
-		"https://www.google.com/search*",
-		"https://www.bing.com/search*",
-		"https://duckduckgo.com/?q*",
-		"https://duckduckgo.com/html/*",
+		"<all_urls>",
 		"storage",
 		"webRequest",
 		"activeTab",
