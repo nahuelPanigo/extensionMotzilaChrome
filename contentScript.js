@@ -248,15 +248,16 @@ pageManager.getResults(col).then(requ=>{
 				array = pageManager.getArrays(requests,requ[0],requ[2]);
 				}).catch(()=>{console.log('abc');
 				});
-});
-
-browser.runtime.sendMessage({
+		browser.runtime.sendMessage({
 				"call": "getResultsFromPeers"
 		}).then( peerReq=>{
 			peer++;
 			console.log(requests);
 			pageManager.peerRequest(peerReq,filesP,peer);
 		})
+});
+
+
 
 browser.runtime.onMessage.addListener((requests,sender)=>{
 	if(requests.call==="getUrl"){

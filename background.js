@@ -1,6 +1,5 @@
 class Google{
 	makeRequests(value,back){
-		console.log("roberto");
 		return new Promise((resolve,reject)=>{ 
 		var string1="https://www.bing.com/search?q=";
 		var string2="https://duckduckgo.com/html/?q=";
@@ -190,17 +189,18 @@ search;
 	}
 
 	getResultsFromPeers(){
-		console.log(+'results from peers');
+		console.log('results from peers');
 		//let username = this.peers[0].username;
 		try {
 			this.sendRequest({
-				'str': engine.getString(),
+				'str': this.getEngine().getString(),
 				'value':this.getSearch(),
 				automatic:true,
 				withoutcheck:true
 			  },"All");
 		  }catch(error){
 			console.log("Error al utilizar sendurl");
+			console.log(error);
 	  }
 	}
 
@@ -285,6 +285,7 @@ var startBackground = async function(config) {
 	  await extension.getPeers(extension.setPeers);
 	  browser.runtime.onMessage.addListener((request, sender) => {
 		if(extension[request.call]){
+			console.log(request.call);
 			promise=extension[request.call](request.args);
 			return promise;
 		}
