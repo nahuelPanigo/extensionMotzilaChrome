@@ -188,6 +188,7 @@ search;
 		});
 	}
 
+//desde el content llama al metodo para que busque los resultados de los peers
 	getResultsFromPeers(){
 		console.log('results from peers');
 		//let username = this.peers[0].username;
@@ -200,7 +201,6 @@ search;
 			  },"All");
 		  }catch(error){
 			console.log("Error al utilizar sendurl");
-			console.log(error);
 	  }
 	}
 
@@ -208,7 +208,8 @@ search;
 		async automaticProcessing(msg , peer){
 		console.log('Automatic procesing request...');
 		console.log('Pedido de: ' + peer);
-		await this.request(engine.getString,search).then(jsonNews => {
+		console.log(msg);
+		await this.request(msg.str,msg.value).then(jsonNews => {
 			console.log("News obtained, preparing to send response");
 			console.log(jsonNews);
 			this.sendResponse({
