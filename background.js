@@ -165,6 +165,8 @@ search;
 
 
 	async request(string,req){
+		console.log(string)
+		console.log(req)
 		return new Promise((resolve,reject)=>{ 
 		var oReq = new XMLHttpRequest();
 		oReq.onload = function(data){
