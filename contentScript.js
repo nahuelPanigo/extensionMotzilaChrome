@@ -10,7 +10,7 @@ class ContentPageManager {
 	}
 	
 	equalResult(j){
-		equal[j]++;
+		this.equal[j]++;
 	}
 
 	getUrl(id,array){
@@ -18,11 +18,11 @@ class ContentPageManager {
 	}
 
 	getResults(j){
-		return equal[j];
+		return this.equal[j];
 	}
 
 	setRequest(array){
-		request=array;
+		this.request=array;
 	}
 
 	getArrays(array1y2,array,engine){
@@ -62,7 +62,6 @@ class ContentPageManager {
 				if(engine.match('https://www.bing')){
 					resolve(document.querySelectorAll('div.b_attribution'));
 				}else{
-
 					resolve(document.getElementsByClassName("result__a"));
 				}
 			}
@@ -75,7 +74,7 @@ class ContentPageManager {
 					var string1=str1;
 					var string2=str2.concat('/');
 		}else{
-				if(str2.length<str1.length){ 
+				if(str2.length>str1.length){ 
 								var string1=str1.concat('/'); 
 								var string2=str2;
 							}
@@ -87,7 +86,19 @@ class ContentPageManager {
 		return string1.match(string2)
 	}
 
+	createImage(id,file){
+		var img=document.createElement("img");
+		img.style.width="60px";
+		img.style.float="right";
+		img.id=id;
+		img.src=browser.extension.getURL(file);
+		return img;
+	}	
+
+
 	allRequests(requests,array1,array2,array,engine){
+		console.log(requests);
+		console.log(array);
 		this.setRequest(array);
 		this.getDivs(engine).then(value =>{
 				for (var i = 0; i < 5; i++) {
@@ -98,7 +109,7 @@ class ContentPageManager {
 							break;
 						}else{
 							if(j===4){
-								img2=this.createImage("img1",array1[5]);
+								img=this.createImage("img1",array1[5]);
 							}
 						}
 					}	
@@ -119,14 +130,6 @@ class ContentPageManager {
 	}
 
 
-	createImage(id,file){
-		var img=document.createElement("img");
-		img.style.width="60px";
-		img.style.float="right";
-		img.id=id;
-		imgC.src=browser.extension.getURL(file);
-		return img;
-	}	
 
 
 	peerRequests(peerReq,files,peer){
