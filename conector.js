@@ -180,8 +180,8 @@ class ConectorP2P{
 	}
 
 	sendData(obj){
+		console.log(obj);
 		try {
-			console.log(obj);
 			this.port.postMessage(JSON.stringify(obj));
 		} catch(e) {
 			console.log("Error al enviar datos desde la extension");
@@ -537,7 +537,7 @@ class AbstractP2PExtensionBackground {
 
 		//this.initialize();
 		this.portEvent.onMessage.addListener((msj) =>{
-
+				console.log("holaaaa")
 				let msj_data = JSON.parse(msj);
 
 				this.conector.sendEvent(msj);
