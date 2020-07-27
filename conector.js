@@ -537,7 +537,6 @@ class AbstractP2PExtensionBackground {
 
 		//this.initialize();
 		this.portEvent.onMessage.addListener((msj) =>{
-				console.log("holaaaa")
 				let msj_data = JSON.parse(msj);
 
 				this.conector.sendEvent(msj);

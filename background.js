@@ -26,6 +26,17 @@ class Google{
 			});
 		})
 	}
+
+	parseResults(msg){
+		var col,array
+		var array= new Array(5);
+		col=responseData.querySelectorAll('div.r');
+					for (var i = 0; i < 5 ; i++) {
+							array[i]=col[i].getElementsByTagName('a')[0].href;
+					}
+		return array;
+	}
+
 	getString(){
 		return "https://www.google.com/search?q=";
 	}
@@ -45,7 +56,6 @@ class Bing{
 							array1[i]=col1[i].getElementsByTagName('a')[0].href;
 					}	
 					if(col2 !== undefined){
-							console.log("array1",array1);
 							resolve([array1,array2])
 						}
 			});
@@ -60,6 +70,16 @@ class Bing{
 			});
 		});
 	}
+	parseResults(msg){
+		var col,array
+		var array= new Array(5);
+		col=responseData.querySelectorAll('div.b_attribution');
+				for (var i = 0; i < 5 ; i++) {
+						array[i]=col[i].innerText;
+				}
+	return array;
+	}
+
 	getString(){
 		return "https://www.bing.com/search?q=";
 	}
@@ -79,7 +99,6 @@ class Duck{
 					col1=responseData.querySelectorAll('div.r');
 					for (var i = 0; i < 5 ; i++) {
 							array1[i]=col1[i].getElementsByTagName('a')[0].href;
-							console.log(array1[i])
 					}	
 					if(col2 !== undefined){
 							resolve([array1,array2])
@@ -97,6 +116,18 @@ class Duck{
 			});
 		});
 	}
+
+	parseResults(msg){
+		var col,array
+		var array= new Array(5);
+		col=responseData.getElementsByClassName('result__extras__url');
+					for (var i = 0; i < 5 ; i++) {
+							array[i]=col[i].getElementsByTagName('a')[0].href;
+					}
+		return array;
+	}
+
+
 	getString(){
 		return "https://duckduckgo.com/html/?q=";
 	}
@@ -165,8 +196,6 @@ search;
 
 
 	async request(string,req){
-		console.log(string)
-		console.log(req)
 		return new Promise((resolve,reject)=>{ 
 		var oReq = new XMLHttpRequest();
 		oReq.onload = function(data){
@@ -226,7 +255,8 @@ search;
 
 		receiveResponse(msg, peer){
 		console.log("Response receivd from: " + peer);
-		console.log(msg);
+		console.log("el resultado obtenido del peer es:");
+		console.log(this.engine.parseResults(msg));
 		this.getCurrentTab().then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
 				call: "peerRequests(peerReq,files)",
