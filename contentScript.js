@@ -253,7 +253,7 @@ pageManager.getResults(col).then(requ=>{
 		}).then( peerReq=>{
 			peer++;
 			console.log(requests);
-			pageManager.peerRequest(peerReq,filesP,peer);
+			pageManager.peerRequests(peerReq,filesP,peer);
 		})
 });
 

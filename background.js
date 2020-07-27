@@ -229,8 +229,8 @@ search;
 		console.log(msg);
 		this.getCurrentTab().then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
-				call: "presentRelatedNews",
-				args: {'news': msg.news, 'topics': msg.keywords, 'peer': peer }
+				call: "peerRequests(peerReq,files)",
+				args: {'news': msg.news, 'topics': msg.keywords,}
 			});
 		});
     }

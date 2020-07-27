@@ -181,6 +181,7 @@ class ConectorP2P{
 
 	sendData(obj){
 		try {
+			console.log(obj);
 			this.port.postMessage(JSON.stringify(obj));
 		} catch(e) {
 			console.log("Error al enviar datos desde la extension");
