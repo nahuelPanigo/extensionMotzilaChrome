@@ -27,10 +27,10 @@ class Google{
 		})
 	}
 
-	parseResults(msg){
+	parseResults(doc){
 		var col,array
 		var array= new Array(5);
-		col=responseData.querySelectorAll('div.r');
+		col=doc.querySelectorAll('div.r');
 					for (var i = 0; i < 5 ; i++) {
 							array[i]=col[i].getElementsByTagName('a')[0].href;
 					}
@@ -70,10 +70,10 @@ class Bing{
 			});
 		});
 	}
-	parseResults(msg){
+	parseResults(doc){
 		var col,array
 		var array= new Array(5);
-		col=responseData.querySelectorAll('div.b_attribution');
+		col=doc.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
 						array[i]=col[i].innerText;
 				}
@@ -117,10 +117,10 @@ class Duck{
 		});
 	}
 
-	parseResults(msg){
+	parseResults(doc){
 		var col,array
 		var array= new Array(5);
-		col=responseData.getElementsByClassName('result__extras__url');
+		col=doc.getElementsByClassName('result__extras__url');
 					for (var i = 0; i < 5 ; i++) {
 							array[i]=col[i].getElementsByTagName('a')[0].href;
 					}
@@ -226,6 +226,7 @@ search;
 			this.sendRequest({
 				'str': this.getEngine().getString(),
 				'value':this.getSearch(),
+				'engine':this.getEngine(),
 				automatic:true,
 				withoutcheck:true
 			  },"All");
@@ -236,14 +237,15 @@ search;
 
 
 		async automaticProcessing(msg , peer){
-		console.log('Automatic procesing request...');
 		console.log('Pedido de: ' + peer);
 		console.log(msg);
-		await this.request(msg.str,msg.value).then(jsonNews => {
-			console.log("News obtained, preparing to send response");
-			console.log(jsonNews);
+		var array;
+		await this.request(msg.str,msg.value).then(req => {
+			array = msg.engine.parseResults(req);
+			console.log("reqs obtained :");
+			console.log(array);
 			this.sendResponse({
-				'req':jsonNews,
+				'req':array,
 				automatic:true,
 				withoutcheck:true
 			},peer);
@@ -255,7 +257,6 @@ search;
 		receiveResponse(msg, peer){
 		console.log("Response Received " + peer);
 		console.log(msg);
-		var array=this.engine.parseResults(msg.req);
 		console.log(array);
 		this.getCurrentTab().then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
