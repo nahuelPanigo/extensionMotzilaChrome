@@ -241,6 +241,7 @@ search;
 		console.log(msg);
 		var array;
 		await this.request(msg.str,msg.value).then(req => {
+			console.log(msg.engine);
 			array = msg.engine.parseResults(req);
 			console.log("reqs obtained :");
 			console.log(array);
