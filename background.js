@@ -221,7 +221,6 @@ search;
 
 //desde el content llama al metodo para que busque los resultados de los peers
 	getResultsFromPeers(){
-		console.log('results from peers');
 		//let username = this.peers[0].username;
 		try {
 			this.sendRequest({
@@ -254,9 +253,8 @@ search;
 
 
 		receiveResponse(msg, peer){
-		console.log("Response receivd from: " + peer);
-		console.log("el resultado obtenido del peer es:");
-		console.log(msg.req);
+		console.log("Response Received " + peer);
+		console.log(msg);
 		var array=this.engine.parseResults(msg.req);
 		console.log(array);
 		this.getCurrentTab().then((tabs) => {
