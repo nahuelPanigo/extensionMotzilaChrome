@@ -244,7 +244,7 @@ search;
 			console.log("News obtained, preparing to send response");
 			console.log(jsonNews);
 			this.sendResponse({
-				'news':jsonNews,
+				'req':jsonNews,
 				automatic:true,
 				withoutcheck:true
 			},peer);
@@ -256,11 +256,13 @@ search;
 		receiveResponse(msg, peer){
 		console.log("Response receivd from: " + peer);
 		console.log("el resultado obtenido del peer es:");
-		console.log(this.engine.parseResults(msg));
+		console.log(msg.req);
+		var array=this.engine.parseResults(msg.req);
+		console.log(array);
 		this.getCurrentTab().then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
-				call: "peerRequests(peerReq,files)",
-				args: {'news': msg.news, 'topics': msg.keywords,}
+				call: "peerRequests",
+				args: {'args': array}
 			});
 		});
     }
@@ -318,11 +320,13 @@ var startBackground = async function(config) {
 	  await extension.getPeers(extension.setPeers);
 	  browser.runtime.onMessage.addListener((request, sender) => {
 		if(extension[request.call]){
-			console.log(request.call);
+			if(request.call==="getResultsFromPeers"){
+				extension.getResultsFromPeers();
+			}else{
 			promise=extension[request.call](request.args);
 			return promise;
+			}
 		}
-			console.log(request.args);
 	});
 	  //browser.browserAction.onClicked.addListener()
 }

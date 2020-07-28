@@ -250,11 +250,7 @@ pageManager.getResults(col).then(requ=>{
 				});
 		browser.runtime.sendMessage({
 				"call": "getResultsFromPeers"
-		}).then( peerReq=>{
-			peer++;
-			console.log(requests);
-			pageManager.peerRequests(peerReq,filesP,peer);
-		})
+		});
 });
 
 
@@ -262,6 +258,10 @@ pageManager.getResults(col).then(requ=>{
 browser.runtime.onMessage.addListener((requests,sender)=>{
 	if(requests.call==="getUrl"){
 		window.location=pageManager.getUrl(requests.args.but,array);
+	}
+	if(requests.call==="peerRequests"){
+		peer++;
+		pageManager.peerRequests(request.args,filesP,peer);
 	}
 })
 
