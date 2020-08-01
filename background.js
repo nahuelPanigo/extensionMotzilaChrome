@@ -226,7 +226,7 @@ search;
 			this.sendRequest({
 				'str': this.getEngine().getString(),
 				'value':this.getSearch(),
-				'engine':this.getEngine(),
+				'engine':JSON.stringify(this.getEngine()),
 				automatic:true,
 				withoutcheck:true
 			  },"All");
@@ -241,7 +241,7 @@ search;
 		console.log(msg);
 		var array;
 		await this.request(msg.str,msg.value).then(req => {
-			console.log(msg.engine);
+			console.log(JSON.parse(msg.engine));
 			array = msg.engine.parseResults(req);
 			console.log("reqs obtained :");
 			console.log(array);
