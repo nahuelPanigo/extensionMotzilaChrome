@@ -253,7 +253,7 @@ search;
 		var array,eng;
 		await this.request(msg.str,msg.value).then(req => {
 			eng=this.makeEngine(msg.str);
-			array = engine.parseResults(req);
+			array = eng.parseResults(req);
 			console.log("reqs obtained :");
 			console.log(array);
 			this.sendResponse({
