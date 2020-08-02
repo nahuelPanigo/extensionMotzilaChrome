@@ -208,10 +208,10 @@ search;
 	}
 
 	makeEngine(engine){
-		if(value.engine.match('https://www.google')){
+		if(engine.match('https://www.google')){
 			return new Google();
 		}else{
-			if(value.engine.match('https://www.bing')){
+			if(engine.match('https://www.bing')){
 				return new Bing();
 			}else{
 				return new Duck();
