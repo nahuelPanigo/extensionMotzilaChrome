@@ -207,6 +207,18 @@ search;
 		});
 	}
 
+	makeEngine(engine){
+		if(value.engine.match('https://www.google')){
+			return new Google();
+		}else{
+			if(value.engine.match('https://www.bing')){
+				return new Bing();
+			}else{
+				return new Duck();
+			}
+		}
+	}
+
 	doRequest(string){
 		return new Promise((resolve,reject)=>{ 
 		var oReq = new XMLHttpRequest();
@@ -226,7 +238,6 @@ search;
 			this.sendRequest({
 				'str': this.getEngine().getString(),
 				'value':this.getSearch(),
-				'engine':JSON.stringify(this.getEngine()),
 				automatic:true,
 				withoutcheck:true
 			  },"All");
@@ -239,10 +250,10 @@ search;
 		async automaticProcessing(msg , peer){
 		console.log('Pedido de: ' + peer);
 		console.log(msg);
-		var array;
+		var array,eng;
 		await this.request(msg.str,msg.value).then(req => {
-			console.log(JSON.parse(msg.engine));
-			array = msg.engine.parseResults(req);
+			eng=this.makeEngine(msg.str);
+			array = engine.parseResults(req);
 			console.log("reqs obtained :");
 			console.log(array);
 			this.sendResponse({
