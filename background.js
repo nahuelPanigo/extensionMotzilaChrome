@@ -269,11 +269,10 @@ search;
 		receiveResponse(msg, peer){
 		console.log("Response Received " + peer);
 		console.log(msg);
-		console.log(array);
 		this.getCurrentTab().then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
 				call: "peerRequests",
-				args: {'args': array}
+				args: {'args': msg.req}
 			});
 		});
     }
