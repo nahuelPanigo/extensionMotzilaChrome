@@ -269,13 +269,26 @@ search;
 		receiveResponse(msg, peer){
 		console.log("Response Received " + peer);
 		console.log(msg);
+		let params={
+			active:true,
+			currentWindow: true,
+		}
+		let message={
+			"call": "peerRequests",
+			"args":  {'args': msg.req}
+		}
+		browser.tabs.query(params,function(tabs){
+			browser.tabs.sendMessage(tabs[0].id,message);
+		})
+		/*
 		this.getCurrentTab().then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
 				call: "peerRequests",
 				args: {'args': msg.req}
 			});
 		});
-    }
+		*/
+    	}
 
 
 	searchNewRequest(value){
