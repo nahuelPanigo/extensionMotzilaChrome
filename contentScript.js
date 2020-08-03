@@ -262,6 +262,7 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 });
 
 browser.runtime.onMessage.addListener( requests => {
+	console.log("nahuelllllllll");
 	if(requests.call==="peerRequests"){
 		peer++;
 		pageManager.peerRequests(request.args,filesP,peer);

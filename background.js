@@ -268,6 +268,7 @@ search;
 		receiveResponse(msg, peer){
 		console.log("Response Received " + peer);
 		browser.tabs.query({active: true, windowId: browser.windows.WINDOW_ID_CURRENT}).then(tabs => {
+		console.log(tabs[0].id);
 		browser.tabs.sendMessage(tabs[0].id,{
     		call: "peerRequests",
 			args: {'args': msg.req}
