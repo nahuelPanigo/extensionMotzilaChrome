@@ -133,6 +133,7 @@ class ContentPageManager {
 
 
 	peerRequests(peerReq,files,peer){
+		console.log("viendo resultados de los peers")
 		this.getDivs(peerReq.engine).then(value =>{
 				for (var i = 0; i < 5; i++) {
 					var imgCirculo=this.createImage("circulo",files[11])
@@ -147,6 +148,9 @@ class ContentPageManager {
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
 					value[i].appendChild(img2De);
+					console.log(imgCirculo)
+					console.log(imgNum2)
+					console.log(imgNum1)
 		});
 	}
 	
