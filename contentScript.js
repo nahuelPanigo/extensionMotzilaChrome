@@ -266,7 +266,7 @@ browser.runtime.onMessage.addListener( requests => {
 		peer++;
 		pageManager.peerRequests(request.args,filesP,peer);
 	}
-}
+});
 
 
 
