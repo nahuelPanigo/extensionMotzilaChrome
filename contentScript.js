@@ -259,13 +259,14 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 	if(requests.call==="getUrl"){
 		window.location=pageManager.getUrl(requests.args.but,array);
 	}
+});
+
+browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
 		pageManager.peerRequests(request.args,filesP,peer);
 	}
-})
-
-
+}
 
 
 

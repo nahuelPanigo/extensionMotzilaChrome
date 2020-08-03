@@ -234,6 +234,7 @@ search;
 //desde el content llama al metodo para que busque los resultados de los peers
 	getResultsFromPeers(){
 		//let username = this.peers[0].username;
+			console.log(this.getCurrentTab);
 		try {
 			this.sendRequest({
 				'str': this.getEngine().getString(),
@@ -268,26 +269,12 @@ search;
 
 		receiveResponse(msg, peer){
 		console.log("Response Received " + peer);
-		console.log(msg);
-		let params={
-			active:true,
-			currentWindow: true,
-		}
-		let message={
-			"call": "peerRequests",
-			"args":  {'args': msg.req}
-		}
-		browser.tabs.query(params,function(tabs){
-			browser.tabs.sendMessage(tabs[0].id,message);
-		})
-		/*
-		this.getCurrentTab().then((tabs) => {
-			browser.tabs.sendMessage(tabs[0].id, {
-				call: "peerRequests",
-				args: {'args': msg.req}
-			});
-		});
-		*/
+			browser.tabs.query({active: true, windowId: browser.windows.WINDOW_ID_CURRENT}).then(tabs => {
+		browser.tabs.sendMessage(tabs[0].id,{
+    		call: "peerRequests",
+			args: {'args': msg.req}
+    	})
+  		});
     	}
 
 
