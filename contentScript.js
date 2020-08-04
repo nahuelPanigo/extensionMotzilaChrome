@@ -270,7 +270,7 @@ browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		console.log("naaaaaaaaaaaaaa");
 		peer++;
-		console.log("ahahahaaaa");
+		console.log(request);
 		pageManager.peerRequests(request.args,filesP,peer);
 		console.log("123465");
 	}
