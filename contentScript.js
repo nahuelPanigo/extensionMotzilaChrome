@@ -143,14 +143,14 @@ class ContentPageManager {
 						}
 					var imgNum2=this.createImage("num2",files[peer])
 					var imgNum1=this.createImage("num1",files[this.getResults()]);
-				}
 					value[i].appendChild(imgCirculo);
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
 					value[i].appendChild(img2De);
-					console.log(imgCirculo)
-					console.log(imgNum2)
-					console.log(imgNum1)
+			   }
+			   console.log(imgCirculo)
+			   console.log(imgNum2)
+			   console.log(imgNum1)
 		});
 	}
 	
