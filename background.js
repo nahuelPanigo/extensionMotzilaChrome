@@ -271,8 +271,7 @@ search;
 		console.log(tabs[0].id);
 		browser.tabs.sendMessage(tabs[0].id,{
     		call: "peerRequests",
-			args: {'args': msg.req
-				   'engine': }
+			args: {'args': msg.req}
     	})
   		});
     	}
