@@ -140,15 +140,18 @@ class ContentPageManager {
 				for (var i = 0; i < 5; i++) {
 					var imgCirculo=this.createImage("circulo",files[11])
 					var imgDe=this.createImage("De",files[10]);
+					console.log("creao las 2 primeras imagenes");
 					if(this.request[i].match(peerReq[i])){
 							this.equalResult(i);
 						}
+					console.log("el if anda");
 					var imgNum2=this.createImage("num2",files[peer])
 					var imgNum1=this.createImage("num1",files[this.getResults()]);
 					value[i].appendChild(imgCirculo);
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
 					value[i].appendChild(img2De);
+					console.log("agregar las imagenes anda");
 			   }
 		});
 	}
