@@ -1,6 +1,7 @@
 class ContentPageManager {	
 	request;
 	equal;
+	engineUri;
 
 	initializeEqual(){
 		this.equal=new Array(5);
@@ -133,12 +134,11 @@ class ContentPageManager {
 
 
 	peerRequests(peerReq,files,peer){
-		console.log("viendo resultados de los peers")
-		this.getDivs(peerReq.engine).then(value =>{
+		this.getDivs(this.engineUri).then(value =>{
 				for (var i = 0; i < 5; i++) {
 					var imgCirculo=this.createImage("circulo",files[11])
 					var imgDe=this.createImage("De",files[10]);
-					if(request[j].match(peerReq[j])){
+					if(this.request[j].match(peerReq[j])){
 							this.equalResult(j);
 						}
 					var imgNum2=this.createImage("num2",files[peer])
@@ -154,6 +154,10 @@ class ContentPageManager {
 		});
 	}
 	
+	setEngineUri(engine){
+		this.engineUri=engine;
+	}
+
 	getResults(){
 		return  new Promise((resolve,reject)=>{
 			var searchEngine=document.URL;
@@ -242,6 +246,7 @@ pageManager.initializeEqual();
 var peer=0;
 var array;
 pageManager.getResults(col).then(requ=>{
+		pageManager.setEngineUri(requ[2]);
 		browser.runtime.sendMessage({
 				"call": "searchNewRequest",
 				"args": {req: requ[1],
