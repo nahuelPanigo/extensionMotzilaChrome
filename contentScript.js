@@ -227,18 +227,18 @@ let filesD=[
 "logos/duckMenos.png"
 ]
 let filesP=[
-"logos/cero.jpg",
-"logos/uno.jpg",
-"logos/dos.jpg",
-"logos/tres.jpg",
-"logos/cuatro.jpg",
-"logos/cinco.jpg",
-"logos/seis.jpg",
-"logos/siete.jpg",
-"logos/ocho.jpg",
-"logos/nueve.jpg",
-"logos/circulo.jpg",
-"logos/De.jpg"
+"logos/cero.png",
+"logos/uno.png",
+"logos/dos.png",
+"logos/tres.png",
+"logos/cuatro.png",
+"logos/cinco.png",
+"logos/seis.png",
+"logos/siete.png",
+"logos/ocho.png",
+"logos/nueve.png",
+"logos/circulo.png",
+"logos/De.png"
 ]
 let col=[filesG,filesB,filesD]
 var pageManager = new ContentPageManager();
