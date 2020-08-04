@@ -135,26 +135,18 @@ class ContentPageManager {
 
 	peerRequests(peerReq,files,peer){
 		this.getDivs(this.engineUri).then(value =>{
-			console.log("entro a la parte de los divs")
-			console.log(value);
 				for (var i = 0; i < 5; i++) {
 					var imgCirculo=this.createImage("circulo",files[10])
 					var imgDe=this.createImage("De",files[11]);
-					console.log("creao las 2 primeras imagenes");
 					if(this.request[i].match(peerReq[i])){
 							this.equalResult(i);
 						}
-					console.log("el if anda");
 					var imgNum2=this.createImage("num2",files[peer])
 					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)]);
 					value[i].appendChild(imgCirculo);
-						console.log("imagen circulo anda");
 					value[i].appendChild(imgNum1);
-						console.log("imagen 1 anda");
 					value[i].appendChild(imgNum2);
-						console.log("imagen 2 anda");
-					value[i].appendChild(img2De);
-					console.log("imagen de anda");
+					value[i].appendChild(imgDe);
 			   }
 		});
 	}
