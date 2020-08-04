@@ -18,7 +18,7 @@ class ContentPageManager {
 		return array[id];
 	}
 
-	getResults(j){
+	getEqualResults(j){
 		return this.equal[j];
 	}
 
@@ -146,7 +146,7 @@ class ContentPageManager {
 						}
 					console.log("el if anda");
 					var imgNum2=this.createImage("num2",files[peer])
-					var imgNum1=this.createImage("num1",files[this.getResults()]);
+					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)]);
 					value[i].appendChild(imgCirculo);
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
