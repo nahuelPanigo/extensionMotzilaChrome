@@ -290,7 +290,7 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
-		console.log("message received")
+		console.log(requests)
 		pageManager.peerRequests(requests.args.args,filesP,peer);
 	}
 });
