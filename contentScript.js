@@ -136,8 +136,6 @@ class ContentPageManager {
 
 	peerRequests(peerReq,files,peer){
 		this.getDivs(this.engineUri).then(value =>{
-				console.log(this.request);
-				console.log(peerReq);
 				for (var i = 0; i < 5; i++) {
 					var imgCirculo=this.createImage("circulo",files[10],"50px")
 					var imgDe=this.createImage("De",files[11],"15px");
@@ -290,9 +288,7 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
-		console.log(requests);
-		console.log(requests.args);
-		console.log(requests.args.args);
+		console.log("message received")
 		pageManager.peerRequests(requests.args.args,filesP,peer);
 	}
 });
