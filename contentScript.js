@@ -135,7 +135,7 @@ class ContentPageManager {
 	}
 
 	peerRequests(peerReq,files,peer){
-		console.log(peerRequests);
+		console.log(peerReq);
 		this.getDivs(this.engineUri).then(value =>{
 			console.log(value);
 				for (var i = 0; i < 5; i++) {
