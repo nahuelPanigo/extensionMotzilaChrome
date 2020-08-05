@@ -87,9 +87,9 @@ class ContentPageManager {
 		return string1.match(string2)
 	}
 
-	createImage(id,file){
+	createImage(id,file,px){
 		var img=document.createElement("img");
-		img.style.width="60px";
+		img.style.width=px;
 		img.style.float="right";
 		img.id=id;
 		img.src=browser.extension.getURL(file);
@@ -98,29 +98,27 @@ class ContentPageManager {
 
 
 	allRequests(requests,array1,array2,array,engine){
-		console.log(requests);
-		console.log(array);
 		this.setRequest(array);
 		this.getDivs(engine).then(value =>{
 				for (var i = 0; i < 5; i++) {
 					var img,img2;
 					for (var j = 0; j < 5; j++) {
 						if(this.equalUri(array[i],requests[0][j])){
-							img=this.createImage("img1",array1[j]);
+							img=this.createImage("img1",array1[j],"45px");
 							break;
 						}else{
 							if(j===4){
-								img=this.createImage("img1",array1[5]);
+								img=this.createImage("img1",array1[5],"45px");
 							}
 						}
 					}	
 					for (var k = 0; k < 5; k++) {
 							if(this.equalUri(array[i],requests[1][k])){
-								img2=this.createImage("img2",array2[k]);
+								img2=this.createImage("img2",array2[k],"45px");
 								break;
 							}else{
 								if(k===4){
-									img2=this.createImage("img2",array2[5]);
+									img2=this.createImage("img2",array2[5],"45px");
 								}
 							}
 					}
@@ -130,19 +128,33 @@ class ContentPageManager {
 		});
 	}
 
-
-
+	moveImage(img,left,top,pos){
+		img.style.position=pos;
+		img.style.top=top;
+		img.style.left=left;
+	}
 
 	peerRequests(peerReq,files,peer){
 		this.getDivs(this.engineUri).then(value =>{
 				for (var i = 0; i < 5; i++) {
-					var imgCirculo=this.createImage("circulo",files[10])
-					var imgDe=this.createImage("De",files[11]);
-					if(this.request[i].match(peerReq[i])){
-							this.equalResult(i);
-						}
-					var imgNum2=this.createImage("num2",files[peer])
-					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)]);
+					var imgCirculo=this.createImage("circulo",files[10],"45px")
+					var imgDe=this.createImage("De",files[11],"15px");
+					this.moveImage(imgDe,"445px","45px","relative");
+					for(var j=0; j<5 ;j++){
+						if(this.request[j].match(peerReq[i])){
+								console.log(this.request);
+								console.log(peerReq);
+								this.equalResult(i);
+								break;
+							}
+					}
+					var imgNum2=this.createImage("num2",files[peer],"15px");
+						this.moveImage(imgNum2,"450px","40px","relative");
+					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)],"15px");
+						this.moveImage(imgNum1,"440px","50px","relative");
+					if(peer!=1){
+						this.removeImg(value[i]);
+					}
 					value[i].appendChild(imgCirculo);
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
@@ -151,6 +163,14 @@ class ContentPageManager {
 		});
 	}
 	
+
+	removeImg(div){
+		div.removeChild(value.getElementsByTagName("img").circulo);
+		div.removeChild(value.getElementsByTagName("img").num1);
+		div.removeChild(value.getElementsByTagName("img").num2);
+		div.removeChild(value.getElementsByTagName("img").de);
+	}
+
 	setEngineUri(engine){
 		this.engineUri=engine;
 	}
