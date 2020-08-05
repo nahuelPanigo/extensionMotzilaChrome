@@ -75,8 +75,9 @@ class Bing{
 		var array= new Array(5);
 		col=doc.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
-						array[i]=col[i].innerText;
+						array[i]=(col[i].innerText);
 				}
+				console.log(array);
 	return array;
 	}
 
