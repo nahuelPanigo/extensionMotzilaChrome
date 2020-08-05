@@ -288,13 +288,10 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 });
 
 browser.runtime.onMessage.addListener( requests => {
-	console.log("nahuelllllllll");
 	if(requests.call==="peerRequests"){
-		console.log("naaaaaaaaaaaaaa");
 		peer++;
-		console.log(requests);
+		console.log(requests.args.args);
 		pageManager.peerRequests(requests.args,filesP,peer);
-		console.log("123465");
 	}
 });
 
