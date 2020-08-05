@@ -137,9 +137,9 @@ class ContentPageManager {
 	peerRequests(peerReq,files,peer){
 		this.getDivs(this.engineUri).then(value =>{
 				for (var i = 0; i < 5; i++) {
-					var imgCirculo=this.createImage("circulo",files[10],"45px")
+					var imgCirculo=this.createImage("circulo",files[10],"50px")
 					var imgDe=this.createImage("De",files[11],"15px");
-					this.moveImage(imgDe,"445px","45px","relative");
+					this.moveImage(imgDe,"60px","5px","relative");
 					for(var j=0; j<5 ;j++){
 						if(this.request[j].match(peerReq[i])){
 								console.log(this.request);
@@ -148,10 +148,10 @@ class ContentPageManager {
 								break;
 							}
 					}
-					var imgNum2=this.createImage("num2",files[peer],"15px");
-						this.moveImage(imgNum2,"450px","40px","relative");
-					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)],"15px");
-						this.moveImage(imgNum1,"440px","50px","relative");
+					var imgNum2=this.createImage("num2",files[peer],"10px");
+						this.moveImage(imgNum2,"45px","25px","relative");
+					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)],"10px");
+						this.moveImage(imgNum1,"20px","5px","relative");
 					if(peer!=1){
 						this.removeImg(value[i]);
 					}
