@@ -293,7 +293,7 @@ browser.runtime.onMessage.addListener( requests => {
 		console.log(requests);
 		console.log(requests.args);
 		console.log(requests.args.args);
-		pageManager.peerRequests(requests.args,filesP,peer);
+		pageManager.peerRequests(requests.args.args,filesP,peer);
 	}
 });
 
