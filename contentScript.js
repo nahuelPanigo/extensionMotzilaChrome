@@ -154,8 +154,10 @@ class ContentPageManager {
 					console.log("sigue andando");
 					var imgNum2=this.createImage("num2",files[peer],"10px");
 						this.moveImage(imgNum2,"45px","25px","relative");
+						console.log("antes de image2")
 					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)],"10px");
 						this.moveImage(imgNum1,"20px","5px","relative");
+					console.log("antes del peer")
 					if(peer!=1){
 						this.removeImg(value[i]);
 					}
