@@ -140,15 +140,18 @@ class ContentPageManager {
 			console.log(value);
 			console.log(this.request);
 				for (var i = 0; i < 5; i++) {
+					console.log("anda");
 					var imgCirculo=this.createImage("circulo",files[10],"50px")
 					var imgDe=this.createImage("De",files[11],"15px");
 					this.moveImage(imgDe,"60px","5px","relative");
+					console.log("aca tambien");
 					for(var j=0; j<5 ;j++){
 						if(this.request[j].match(peerReq[i])){
 								this.equalResult(i);
 								break;
 							}
 					}
+					console.log("sigue andando");
 					var imgNum2=this.createImage("num2",files[peer],"10px");
 						this.moveImage(imgNum2,"45px","25px","relative");
 					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)],"10px");
@@ -156,10 +159,12 @@ class ContentPageManager {
 					if(peer!=1){
 						this.removeImg(value[i]);
 					}
+					console.log("en esta parte tambien")
 					value[i].appendChild(imgCirculo);
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
 					value[i].appendChild(imgDe);
+					console.log("algo pasa con las imagenes");
 			   }
 		});
 	}
