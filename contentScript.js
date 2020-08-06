@@ -138,6 +138,7 @@ class ContentPageManager {
 		console.log(peerReq);
 		this.getDivs(this.engineUri).then(value =>{
 			console.log(value);
+			console.log(this.request);
 				for (var i = 0; i < 5; i++) {
 					var imgCirculo=this.createImage("circulo",files[10],"50px")
 					var imgDe=this.createImage("De",files[11],"15px");
