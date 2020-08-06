@@ -158,7 +158,7 @@ class ContentPageManager {
 					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)],"10px");
 						this.moveImage(imgNum1,"20px","5px","relative");
 					console.log("antes del peer")
-					if(peer!=2){
+					if(peer!=1){
 						this.removeImg(value[i]);
 					}
 					console.log("en esta parte tambien")
@@ -281,9 +281,10 @@ pageManager.getResults(col).then(requ=>{
 				pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 				array = pageManager.getArrays(requests,requ[0],requ[2]);
 				}).catch(()=>{console.log('abc');
-				});
+				}).then(=>{
 		browser.runtime.sendMessage({
 				"call": "getResultsFromPeers"
+			})
 		});
 });
 
