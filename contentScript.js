@@ -275,7 +275,7 @@ pageManager.getResults(col).then(requ=>{
 				"args": {req: requ[1],
 						engine: requ[2]}
 		}).then( requests=>{
-				console.log(requests);
+				console.log(requ[0]);
 				pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 				array = pageManager.getArrays(requests,requ[0],requ[2]);
 				}).catch(()=>{console.log('abc');
