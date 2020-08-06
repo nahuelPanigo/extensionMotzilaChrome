@@ -268,7 +268,7 @@ let filesP=[
 let col=[filesG,filesB,filesD]
 var pageManager = new ContentPageManager();
 pageManager.initializeEqual();
-var finish=0,peer=0;
+var peer=0;
 var array;
 pageManager.getResults(col).then(requ=>{
 		pageManager.setEngineUri(requ[2]);
@@ -277,18 +277,13 @@ pageManager.getResults(col).then(requ=>{
 				"args": {req: requ[1],
 						engine: requ[2]}
 		}).then( requests=>{
-				console.log(requ[0]);
-				pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
-				array = pageManager.getArrays(requests,requ[0],requ[2]);
-				finish++
-				}).catch(()=>{console.log('abc');
-				});
-		
-		if(finish ==1){
-			browser.runtime.sendMessage({
-					"call": "getResultsFromPeers"
-			});
-		}
+					console.log(requ[0]);
+					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
+					array = pageManager.getArrays(requests,requ[0],requ[2]);
+					browser.runtime.sendMessage({
+						"call": "getResultsFromPeers"
+					});
+		}).catch(()=>{console.log('abc')});
 });
 
 
