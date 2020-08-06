@@ -160,6 +160,7 @@ class ContentPageManager {
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
 					value[i].appendChild(imgDe);
+					console.log("en algunlugar se rompe");
 			   }
 		});
 	}
@@ -173,6 +174,7 @@ class ContentPageManager {
 		div.removeChild(childs.num1);
 		div.removeChild(childs.num2);
 		div.removeChild(childs.de);
+		console.log("paso del todo");
 	}
 
 	setEngineUri(engine){
