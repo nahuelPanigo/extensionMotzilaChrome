@@ -173,7 +173,7 @@ class ContentPageManager {
 		console.log("ahora pasa");
 		div.removeChild(childs.num1);
 		div.removeChild(childs.num2);
-		div.removeChild(childs.de);
+		div.removeChild(childs.De);
 		console.log("paso del todo");
 	}
 
