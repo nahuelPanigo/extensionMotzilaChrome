@@ -134,90 +134,84 @@ class ContentPageManager {
 		img.style.left=left;
 	}
 
+	createAndMove(name,path,px,left,top,pos){
+		var img=this.createImage(name,path,px);
+		this.moveImage(img,left,top,pos);
+		return img;
+	}
+//put de result of the peer in dom
 	peerRequests(peerReq,files,peer){
-		console.log(peerReq);
 		this.getDivs(this.engineUri).then(value =>{
-			console.log(value);
-			console.log(this.request);
-				for (var i = 0; i < 5; i++) {
-					console.log("anda");
-					var imgCirculo=this.createImage("circulo",files[10],"50px")
-					var imgDe=this.createImage("De",files[11],"15px");
-					this.moveImage(imgDe,"60px","5px","relative");
-					console.log("aca tambien");
-					for(var j=0; j<5 ;j++){
+				for (var i = 0; i < 5; i++) {//iterate in te first 5 divs for paste image
+					var imgCirculo=this.createImage("circulo",files[10],"50px")//not need to move this img
+					var imgDe=this.createAndMove("De",files[11],"15px","60px","5px","relative");
+					for(var j=0; j<5 ;j++){//iterate in results and check match
 						if(this.request[j].match(peerReq[i])){
 								this.equalResult(i);
 								break;
 							}
 					}
-					console.log("sigue andando");
-					var imgNum2=this.createImage("num2",files[peer],"10px");
-						this.moveImage(imgNum2,"45px","25px","relative");
-						console.log("antes de image2")
-					var imgNum1=this.createImage("num1",files[this.getEqualResults(i)],"10px");
-						this.moveImage(imgNum1,"20px","5px","relative");
-					console.log("antes del peer")
-					if(peer!=1){
+					var imgNum2=this.createAndMove("num2",files[peer],"10px","45px","25px","relative");
+					var imgNum1=this.createAndMove("num1",files[this.getEqualResults(i)],"10px","20px","5px","relative");
+					if(peer!=1){//remove older img peer
 						this.removeImg(value[i]);
-					}
-					console.log("en esta parte tambien")
+					}//put the new images in div
 					value[i].appendChild(imgCirculo);
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
 					value[i].appendChild(imgDe);
-					console.log("algo pasa con las imagenes");
 			   }
 		});
 	}
 	
-
+	//get a div and delete circle, de, num1 and num2 img
 	removeImg(div){
-		div.removeChild(value.getElementsByTagName("img").circulo);
-		div.removeChild(value.getElementsByTagName("img").num1);
-		div.removeChild(value.getElementsByTagName("img").num2);
-		div.removeChild(value.getElementsByTagName("img").de);
+		var childs= div.getElementsByTagName("img");
+		console.log("se rompe aca");
+		div.removeChild(childs.circulo);
+		console.log("ahora pasa");
+		div.removeChild(childs.num1);
+		div.removeChild(childs.num2);
+		div.removeChild(childs.de);
 	}
 
 	setEngineUri(engine){
 		this.engineUri=engine;
 	}
 
+	//get the results of the search and set index for imgs
 	getResults(){
 		return  new Promise((resolve,reject)=>{
 			var searchEngine=document.URL;
 			var value="";
-			var ind1,ind2;
+			var ind1,ind2;//index to know wich img put
 			var array=new Array(5);
 			if(searchEngine.match('https://www.google')){
 					value=document.getElementsByClassName("gLFyf gsfi")[0].value;
-					ind1=1;
-					ind2=2;
+					ind1=1;ind2=2;
 					var Res=document.querySelectorAll('div.r');
 					for (var i = 0 ; i< Res.length ; i++) {
-						array[i]=(Res[i].getElementsByTagName('a')[0].href);
+						array[i]=(Res[i].getElementsByTagName('a')[0].href);//get only the urls GOOGLE
 					}
-					resolve([array,value,searchEngine,ind1,ind2]);
+					resolve([array,value,searchEngine,ind1,ind2]); //urls, what user searhc,engine, index for img
 			}else{
 				if(searchEngine.match('https://www.bing')){
-					ind1=0;
-					ind2=2;
+					ind1=0;ind2=2;
 					value=document.getElementById('sb_form_q').value
 					var Res=document.querySelectorAll('div.b_attribution');
 					for (var i = 0 ; i< Res.length ; i++){
-							array[i]=(Res[i].innerText);
+							array[i]=(Res[i].innerText);//get only the urls BING
 					}
-					resolve([array,value,searchEngine,ind1,ind2]);
+					resolve([array,value,searchEngine,ind1,ind2]);//urls, what user searhc,engine, index for img
 				}
 				else{
-					ind1=0;
-					ind2=1;
+					ind1=0;ind2=1;
     				var Res=document.querySelectorAll("a.result__url");
 					value=document.getElementById('search_form_input_homepage').value	
 					for (var i = 0 ; i< 5 ; i++) {
-							array[i]=(Res[i].href);
+							array[i]=(Res[i].href);//get only the urls DUCK
 					}
-					resolve([array,value,searchEngine,ind1,ind2])
+					resolve([array,value,searchEngine,ind1,ind2])//urls, what user searhc,engine, index for img
 				}
 			}
 		});
@@ -277,7 +271,6 @@ pageManager.getResults(col).then(requ=>{
 				"args": {req: requ[1],
 						engine: requ[2]}
 		}).then( requests=>{
-					console.log(requ[0]);
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 					array = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
@@ -297,7 +290,6 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
-		console.log(requests)
 		pageManager.peerRequests(requests.args.args,filesP,peer);
 	}
 });
