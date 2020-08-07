@@ -5,9 +5,10 @@ class ContentPageManager {
 	prom;
 
 	initializeEqual(){
+		console.log("initialize");
 		this.equal=new Array(5);
 		this.prom=new Array(3);
-		for (var j=0;i<3;i++){
+		for (var j=0;j<3;j++){
 				var array=new Array(5);
 			for (var i=0;i<5;i++){
 				array[i]=i+1;
