@@ -239,6 +239,7 @@ class ContentPageManager {
 				}	
 			}
 		}
+		console.log("aca anda");
 		browser.runtime.sendMessage({
 				data: "hello popup",
 				"args": {req: "mensaje desde el content para el popup"}
