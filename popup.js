@@ -16,7 +16,9 @@ function cambiar(but){
 
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
     alert("I am popup!");
-    console.log("message");
+    var p=document.createElement("p");
+    p.innerText="resultado 1 ";
+    document.getElementsById("i1").appendChild(p);
     sendResponse({
         data: "I am fine, thank you. How is life in the background?"
     });
