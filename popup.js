@@ -8,13 +8,19 @@ function cambiar(but){
 		"call": "getUrl",
 		"args":  {but: but}
 	}
-	chrome.tabs.query(params,function(tabs){
+	browser.tabs.query(params,function(tabs){
 		chrome.tabs.sendMessage(tabs[0].id,message);
 	})
 
 }
 
-
+browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
+    alert("I am popup!");
+    console.log("message");
+    sendResponse({
+        data: "I am fine, thank you. How is life in the background?"
+    });
+})
 
 
 

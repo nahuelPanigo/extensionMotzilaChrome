@@ -2,9 +2,18 @@ class ContentPageManager {
 	request;
 	equal;
 	engineUri;
+	prom;
 
 	initializeEqual(){
 		this.equal=new Array(5);
+		this.prom=new Array(3);
+		for (var j=0;i<3;i++){
+				var array=new Array(5);
+			for (var i=0;i<5;i++){
+				array[i]=i+1;
+			}
+			this.prom[j]=array;
+		}
 		for (var i=0;i<5;i++){
 			this.equal[i]=0;
 		}
@@ -160,7 +169,6 @@ class ContentPageManager {
 					value[i].appendChild(imgNum1);
 					value[i].appendChild(imgNum2);
 					value[i].appendChild(imgDe);
-					console.log("en algunlugar se rompe");
 			   }
 		});
 	}
@@ -168,13 +176,10 @@ class ContentPageManager {
 	//get a div and delete circle, de, num1 and num2 img
 	removeImg(div){
 		var childs= div.getElementsByTagName("img");
-		console.log("se rompe aca");
 		div.removeChild(childs.circulo);
-		console.log("ahora pasa");
 		div.removeChild(childs.num1);
 		div.removeChild(childs.num2);
 		div.removeChild(childs.De);
-		console.log("paso del todo");
 	}
 
 	setEngineUri(engine){
@@ -217,6 +222,29 @@ class ContentPageManager {
 				}
 			}
 		});
+	}
+
+	callPopUpAndGiveResult(result,peer,array){
+		for (var i = 0; i<3 ; i++) {
+			for (var j = 0; j<5 ; j++) {
+				for (var j = 0; j<5 ; j++) {
+					if(result[k].match(array[i][j])){
+						this.prom[i][j]+=k+1;
+						break;
+					}else{
+						if(k==4){
+							this.prom[i][j]+=6;
+						}
+					}
+				}	
+			}
+		}
+		browser.runtime.sendMessage({
+				data: "hello popup",
+				"args": {req: "mensaje desde el content para el popup"}
+		}, function (response) {
+                    console.dir(response);
+         });
 	}
 
 }
@@ -293,6 +321,7 @@ browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
 		pageManager.peerRequests(requests.args.args,filesP,peer);
+		pageManager.callPopUpAndGiveResult(requests.args.args,peer,array);
 	}
 });
 
