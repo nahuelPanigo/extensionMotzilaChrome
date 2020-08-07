@@ -15,14 +15,9 @@ function cambiar(but){
 }
 
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
-    console.log("boca");
-    var p=document.createElement("p");
-    console.log("jime");
-    p.innerText="resultado 1";
-    console.log("fea");
     array=document.getElementById("res").children
     for(i=0;i<15;i++){
-    	array[i].appendChild(p);
+    	array[i].appendChild("holaa");
     }
     //document.appendChild(p);
     console.log("cara de culo");
