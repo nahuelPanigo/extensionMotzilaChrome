@@ -17,8 +17,11 @@ function cambiar(but){
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
     console.log("boca");
     var p=document.createElement("p");
+    console.log("jime");
     p.innerText="resultado 1";
+    console.log("fea");
     document.appendChild(p);
+    console.log("cara de culo");
     sendResponse({
         data: "I am fine, thank you. How is life in the background?"
     });
