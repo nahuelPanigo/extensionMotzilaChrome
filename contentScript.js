@@ -12,6 +12,7 @@ class ContentPageManager {
 			for (var i=0;i<5;i++){
 				array[i]=i+1;
 			}
+			console.log(array);
 			this.prom[j]=array;
 		}
 		for (var i=0;i<5;i++){
@@ -226,7 +227,6 @@ class ContentPageManager {
 
 	callPopUpAndGiveResult(result,peer,array){
 		console.log("aca anda");
-		console.log(this.prom);
 		for (var i = 0; i<3 ; i++) {
 			for (var j = 0; j<5 ; j++) {
 				for (var k = 0; k<5 ; k++) {
@@ -241,6 +241,7 @@ class ContentPageManager {
 				}	
 			}
 		}
+		console.log(this.prom);
 		console.log("aca anda");
 		browser.runtime.sendMessage({
 				data: "hello popup",
