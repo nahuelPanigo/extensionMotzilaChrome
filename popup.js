@@ -21,6 +21,7 @@ browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
     var p=document.createElement("p");
     p.innerText="resultado 1 ";
     document.getElementsById("i1").appendChild(p);
+    alert(message);
     sendResponse({
         data: "I am fine, thank you. How is life in the background?"
     });
