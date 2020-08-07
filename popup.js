@@ -15,12 +15,10 @@ function cambiar(but){
 }
 
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
-    alert("I am popup!");
     console.log("boca");
     var p=document.createElement("p");
     p.innerText="resultado 1";
     document.appendChild(p);
-    alert(message);
     sendResponse({
         data: "I am fine, thank you. How is life in the background?"
     });
