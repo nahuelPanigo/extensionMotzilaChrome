@@ -5,7 +5,6 @@ class ContentPageManager {
 	prom;
 
 	initializeEqual(){
-		console.log("initialize");
 		this.equal=new Array(5);
 		this.prom=new Array(3);
 		for (var j=0;j<3;j++){
@@ -13,7 +12,6 @@ class ContentPageManager {
 			for (var i=0;i<5;i++){
 				array[i]=i+1;
 			}
-			console.log(array);
 			this.prom[j]=array;
 		}
 		for (var i=0;i<5;i++){
