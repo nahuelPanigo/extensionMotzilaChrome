@@ -16,6 +16,8 @@ function cambiar(but){
 
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
     alert("I am popup!");
+    console.log("nahuel");
+    console.log(message);
     var p=document.createElement("p");
     p.innerText="resultado 1 ";
     document.getElementsById("i1").appendChild(p);
