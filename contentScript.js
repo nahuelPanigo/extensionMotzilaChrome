@@ -322,6 +322,7 @@ browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
 		pageManager.peerRequests(requests.args.args,filesP,peer);
+		console.log("andaaaaa")
 		pageManager.callPopUpAndGiveResult(requests.args.args,peer,array);
 	}
 });
