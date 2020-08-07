@@ -20,7 +20,7 @@ browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
     console.log("jime");
     p.innerText="resultado 1";
     console.log("fea");
-    console.log(document.getElementsByClassName("resultados").children())
+    console.log(document.getElementById("res").children())
     document.appendChild(p);
     console.log("cara de culo");
     sendResponse({
