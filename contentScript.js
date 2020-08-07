@@ -243,7 +243,7 @@ class ContentPageManager {
 				data: "hello popup",
 				"args": {req: "mensaje desde el content para el popup"}
 		}, function (response) {
-                    console.dir(response);
+                    console.log(response);
          });
 	}
 
