@@ -240,7 +240,6 @@ class ContentPageManager {
 			}
 		}
 		console.log(this.prom);
-		console.log("aca anda");
 		browser.runtime.sendMessage({
 				data: "hello popup",
 				"args": {req: "mensaje desde el content para el popup"}
@@ -323,7 +322,6 @@ browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
 		pageManager.peerRequests(requests.args.args,filesP,peer);
-		console.log("andaaaaa")
 		pageManager.callPopUpAndGiveResult(requests.args.args,peer,array);
 	}
 });

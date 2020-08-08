@@ -15,14 +15,13 @@ function cambiar(but){
 }
 
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
-    //array=document.getElementById("res").children
+    array=document.getElementById("res").children
     for(i=0;i<15;i++){
     	//p=document.createElement("p");
    		//p.innerText("nahuel")
     	//array[i].appendChild(p);
     }
     //document.appendChild(p);
-    console.log("cara de culo");
     sendResponse({
         data: "I am fine, thank you. How is life in the background?"
     });
