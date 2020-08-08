@@ -242,7 +242,8 @@ class ContentPageManager {
 		console.log(this.prom);
 		browser.runtime.sendMessage({
 				data: "hello popup",
-				"args": {req: "mensaje desde el content para el popup"}
+				"args": {peer: peer,
+						 prom:this.prom}
 		}, function (response) {
                     console.log(response);
          });
