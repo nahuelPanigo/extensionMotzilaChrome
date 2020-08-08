@@ -16,6 +16,8 @@ function cambiar(but){
 
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
     array=document.getElementById("res").children
+    console.log(array);
+    console.log(message);
     for(i=0;i<15;i++){
     	//p=document.createElement("p");
    		//p.innerText("nahuel")
