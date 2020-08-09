@@ -30,10 +30,10 @@ function change(but){
 
 
 
-function CreateParagraph(peer,cantRess,find){
+function CreateParagraph(peer,cantRess){
 	p=document.createElement("p");	
 	prom=((cantRess/peer)>>0);
-	p.innerText="el promedio es: "+prom+" ("+find+" de "+peer+")";
+	p.innerText="el promedio es: "+prom;
 	p.id="prom";
 	return p;
 }
@@ -44,11 +44,11 @@ function removeParagraph(li){
 	}
 }
 
-function chargeResult(array,peer,find){
+function chargeResult(array,peer){
 	li=document.getElementById("res").children
 	for(i=0;i<15;i++){
 		removeParagraph(li[i])
-		p=CreateParagraph(peer,array[i],find[i]);
+		p=CreateParagraph(peer,array[i]);
 		li[i].appendChild(p);
 	}
 }

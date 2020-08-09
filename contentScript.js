@@ -232,8 +232,7 @@ class ContentPageManager {
 		browser.runtime.sendMessage({
 				data: "popUp",
 				"args": {peer: peer+1,
-						 prom:this.prom
-						 find:this.find}
+						 prom:this.prom}
 		}, function (response) {
                     console.log(response);
          });
@@ -245,7 +244,7 @@ class ContentPageManager {
 				for (var j = 0; j<5 ; j++) {
 					if(result[j].match(array[i])){
 						this.prom[i]+=(j+1);
-						this.find[i]++;
+						//this.find[i]++;
 						break;
 					}else{
 						if(j==4){
