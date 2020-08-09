@@ -1,7 +1,7 @@
 body{
 	background-color: #292a2d;
 	color:#5f6368;
-	width: 350px;
+	width: 500px;
 	text-decoration: none;
 }
 h1{
@@ -14,10 +14,12 @@ h1{
 a {
 	color: #5f6368;
 	text-decoration: none;
+	text-align: left;
 }
 p{
 	color: white;
 	text-decoration: none;
+	text-align:right;
 }
 .resultados{
 	font-size: 18px;
