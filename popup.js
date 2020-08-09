@@ -37,7 +37,7 @@ function CreateParagraph(peer,cantRess){
 	console.log(p);
 	prom=((cantRess/peer)>>0);
 	console.log(prom);
-	p.innerText("el promedio es: "+prom+" de "+peer+" resultados");
+	p.innerText="el promedio es: "+prom+" de "+peer+" resultados";
 	console.log("anda");
 	p.id="prom";
 	return p;
