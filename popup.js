@@ -14,23 +14,42 @@ function change(but){
 
 }
 
+
+	calls=0;
+
+	let params={
+		active:true,
+		currentWindow: true,
+	}
+	let message={
+		"call": "getProm"
+	}
+	browser.tabs.query(params,function(tabs){
+		chrome.tabs.sendMessage(tabs[0].id,message);
+	})
+
+
+
 function CreateParagraph(peer,cantRess){
 	p=document.createElement("p");
 	prom=((cantRess/peer)>>0);
 	p.innerText("el promedio es: "+prom+" de "+peer+" resultados");
 	p.id="prom";
-	return peer;
+	return p;
 }
 
-function removeParagraph(child){
-	child.prom
+function removeParagraph(li){
+	if(calls>0){
+		li.removeChildren(li.prom)
+	}
 }
 
-function chargeResult(arrays,peer){
-	array=document.getElementById("res").children
+function chargeResult(array,peer){
+	li=document.getElementById("res").children
 	for(i=0;i<15;i++){
-		p=
-		array[i].appendChild(p);
+		removeParagraph(li[i])
+		p=CreateParagraph(peer,array[i]);
+		li[i].appendChild(p);
 	}
 }
 
@@ -38,6 +57,7 @@ function chargeResult(arrays,peer){
 browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
 	if(message.data==="popUp"){
 		    console.log(message);
+		    calls++;
 		    changeResult(message.args.prom,message.args.peer)
 		    for(i=0;i<15;i++){
 		    	//p=document.createElement("p");

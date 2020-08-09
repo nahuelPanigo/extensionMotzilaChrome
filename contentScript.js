@@ -6,13 +6,11 @@ class ContentPageManager {
 
 	initializeEqual(){
 		this.equal=new Array(5);
-		this.prom=new Array(3);
-		for (var j=0;j<3;j++){
-				var array=new Array(5);
-			for (var i=0;i<5;i++){
-				array[i]=i+1;
+		this.prom=new Array(15);
+		for (var j=0;j<5;j++){
+			for (var i=0;i<3;i++){
+				this.prom[i+j*3]=j+1;
 			}
-			this.prom[j]=array;
 		}
 		for (var i=0;i<5;i++){
 			this.equal[i]=0;
@@ -224,23 +222,7 @@ class ContentPageManager {
 		});
 	}
 
-	callPopUpAndGiveResult(result,peer,array){
-		console.log(array);
-		for (var i = 0; i<3 ; i++) {
-			for (var j = 0; j<5 ; j++) {
-				for (var k = 0; k<5 ; k++) {
-					if(result[k].match(array[i][j])){
-						this.prom[i][j]+=(k+1);
-						break;
-					}else{
-						if(k==4){
-							this.prom[i][j]+=6;
-						}
-					}
-				}	
-			}
-		}
-		console.log(this.prom);
+	sendMessageToPop(peer){
 		browser.runtime.sendMessage({
 				data: "popUp",
 				"args": {peer: peer,
@@ -248,6 +230,24 @@ class ContentPageManager {
 		}, function (response) {
                     console.log(response);
          });
+	}
+
+	callPopUpAndGiveResult(result,peer,array){
+		console.log(array);
+		for (var i = 0; i<15 ; i++) {
+				for (var j = 0; j<5 ; j++) {
+					if(result[j].match(array[i])){
+						this.prom[i]+=(j+1);
+						break;
+					}else{
+						if(k==4){
+							this.prom[i]+=6;
+						}
+					}
+				}	
+		}
+		console.log(this.prom);
+		this.sendMessageToPop(peer);
 	}
 
 }
@@ -317,6 +317,9 @@ pageManager.getResults(col).then(requ=>{
 browser.runtime.onMessage.addListener((requests,sender)=>{
 	if(requests.call==="getUrl"){
 		window.location=pageManager.getUrl(requests.args.but,array);
+	}
+	if(requests.call==="getProm"){
+		sendMessageToPop(peer);
 	}
 });
 
