@@ -240,7 +240,7 @@ class ContentPageManager {
 						this.prom[i]+=(j+1);
 						break;
 					}else{
-						if(k==4){
+						if(j==4){
 							this.prom[i]+=6;
 						}
 					}
