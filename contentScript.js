@@ -3,13 +3,16 @@ class ContentPageManager {
 	equal;
 	engineUri;
 	prom;
+	find;
 
 	initializeEqual(){
 		this.equal=new Array(5);
 		this.prom=new Array(15);
+		this.find=new Array(15);
 		for (var j=0;j<5;j++){
 			for (var i=0;i<3;i++){
 				this.prom[i+j*3]=j+1;
+				this.find[i+j*3]=1;	
 			}
 		}
 		for (var i=0;i<5;i++){
@@ -226,7 +229,8 @@ class ContentPageManager {
 		browser.runtime.sendMessage({
 				data: "popUp",
 				"args": {peer: peer+1,
-						 prom:this.prom}
+						 prom:this.prom
+						 find:this.find}
 		}, function (response) {
                     console.log(response);
          });
@@ -238,10 +242,12 @@ class ContentPageManager {
 				for (var j = 0; j<5 ; j++) {
 					if(result[j].match(array[i])){
 						this.prom[i]+=(j+1);
+						this.find[i]++;
 						break;
 					}else{
 						if(j==4){
 							this.prom[i]+=6;
+
 						}
 					}
 				}	

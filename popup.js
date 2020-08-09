@@ -30,15 +30,10 @@ function change(but){
 
 
 
-function CreateParagraph(peer,cantRess){
-	console.log(peer);
-	console.log(cantRess);
+function CreateParagraph(peer,cantRess,find){
 	p=document.createElement("p");	
-	console.log(p);
 	prom=((cantRess/peer)>>0);
-	console.log(prom);
-	p.innerText="el promedio es: "+prom+" de "+peer+" resultados";
-	console.log("anda");
+	p.innerText="el promedio es: "+prom+" ("+find+" de "+peer+")";
 	p.id="prom";
 	return p;
 }
@@ -49,18 +44,13 @@ function removeParagraph(li){
 	}
 }
 
-function chargeResult(array,peer){
+function chargeResult(array,peer,find){
 	li=document.getElementById("res").children
-	 console.log("aca tambien")
 	for(i=0;i<15;i++){
 		removeParagraph(li[i])
-		console.log("paso el remove")
-		p=CreateParagraph(peer,array[i]);
-		console.log("paso el create")
+		p=CreateParagraph(peer,array[i],find[i]);
 		li[i].appendChild(p);
-		console.log("lo puso como hijo de fruta")
 	}
-	 console.log("aca no se rompe")
 }
 
 
@@ -68,9 +58,7 @@ browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
 	if(message.data==="popUp"){
 		    console.log(message);
 		    calls++;
-		    console.log("aca llega")
-		    chargeResult(message.args.prom,message.args.peer);
-		     console.log("aca si")
+		    chargeResult(message.args.prom,message.args.peer,message.args.find);
 		    sendResponse({
 		        data: "I am fine, thank you. How is life in the background?"
 		    });
