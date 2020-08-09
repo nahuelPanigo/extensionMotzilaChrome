@@ -1,7 +1,7 @@
 body{
 	background-color: #292a2d;
 	color:#5f6368;
-	width: 250px;
+	width: 350px;
 	text-decoration: none;
 }
 h1{
@@ -15,7 +15,10 @@ a {
 	color: #5f6368;
 	text-decoration: none;
 }
-
+p{
+	color: white;
+	text-decoration: none;
+}
 .resultados{
 	font-size: 18px;
 	text-decoration: none;
