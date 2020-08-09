@@ -15,7 +15,6 @@ a {
 	color: #5f6368;
 	text-decoration: none;
 	text-align: left;
-	display:inline-block;
 }
 li{
 	width: 450px;
@@ -23,7 +22,7 @@ li{
 p{
 	color: white;
 	text-decoration: none;
-	text-align:right;
+	display:initial;
 }
 .resultados{
 	font-size: 18px;
