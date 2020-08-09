@@ -9,12 +9,12 @@ class ContentPageManager {
 		console.log("principio");
 		this.equal=new Array(5);
 		this.prom=new Array(15);
-	//	this.find=new Array(15);
+		this.find=new Array(15);
 		console.log("anda");
 		for (var j=0;j<5;j++){
 			for (var i=0;i<3;i++){
 				this.prom[i+j*3]=j+1;
-	//			this.find[i+j*3]=1;	
+				this.find[i+j*3]=1;	
 			}
 		}
 		for (var i=0;i<5;i++){
@@ -244,7 +244,7 @@ class ContentPageManager {
 				for (var j = 0; j<5 ; j++) {
 					if(result[j].match(array[i])){
 						this.prom[i]+=(j+1);
-						//this.find[i]++;
+						this.find[i]++;
 						break;
 					}else{
 						if(j==4){
