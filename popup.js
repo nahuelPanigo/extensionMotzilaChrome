@@ -31,17 +31,19 @@ function change(but){
 
 
 function CreateParagraph(peer,cantRess){
-	p=document.createElement("p");
+	console.log(peer);
+	console.log(cantRess);
+	p=document.createElement("p");	
+	console.log(p);
 	prom=((cantRess/peer)>>0);
+	console.log(prom);
 	p.innerText("el promedio es: "+prom+" de "+peer+" resultados");
+	console.log("anda");
 	p.id="prom";
 	return p;
 }
 
 function removeParagraph(li){
-	console.log("estoy en el remove")
-	console.log(li)
-	console.log(calls)
 	if(calls>1){
 		li.removeChildren(li.prom)
 	}
