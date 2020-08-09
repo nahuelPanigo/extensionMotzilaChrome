@@ -61,7 +61,7 @@ browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
 		    console.log(message);
 		    calls++;
 		    console.log("aca llega")
-		    changeResult(message.args.prom,message.args.peer);
+		    chargeResult(message.args.prom,message.args.peer);
 		     console.log("aca si")
 		    sendResponse({
 		        data: "I am fine, thank you. How is life in the background?"
