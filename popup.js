@@ -39,6 +39,9 @@ function CreateParagraph(peer,cantRess){
 }
 
 function removeParagraph(li){
+	console.log("estoy en el remove")
+	console.log(li)
+	console.log(calls)
 	if(calls>0){
 		li.removeChildren(li.prom)
 	}
