@@ -6,6 +6,7 @@ class ContentPageManager {
 	find;
 
 	initializeEqual(){
+		console.log("principio");
 		this.equal=new Array(5);
 		this.prom=new Array(15);
 		this.find=new Array(15);
