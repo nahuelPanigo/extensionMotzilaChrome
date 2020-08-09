@@ -319,7 +319,7 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 		window.location=pageManager.getUrl(requests.args.but,array);
 	}
 	if(requests.call==="getProm"){
-		sendMessageToPop(peer);
+		pageManager.sendMessageToPop(peer);
 	}
 });
 
