@@ -1,7 +1,7 @@
 body{
 	background-color: #292a2d;
 	color:#5f6368;
-	width: 420px;
+	width: 450px;
 	text-decoration: none;
 }
 h1{
@@ -16,6 +16,9 @@ a {
 	text-decoration: none;
 	text-align: left;
 	display:inline-block;
+}
+li{
+	width: 450px;
 }
 p{
 	color: white;
