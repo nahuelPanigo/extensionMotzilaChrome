@@ -48,7 +48,7 @@ function chargeResult(array,peer,find){
 	li=document.getElementById("res").children
 	for(i=0;i<15;i++){
 		removeParagraph(li[i])
-		p=CreateParagraph(peer,array[i]);
+		p=CreateParagraph(peer,array[i],find[i]);
 		li[i].appendChild(p);
 	}
 }

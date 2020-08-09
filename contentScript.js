@@ -229,6 +229,7 @@ class ContentPageManager {
 	}
 
 	sendMessageToPop(peer){
+		console.log(this.find);
 		browser.runtime.sendMessage({
 				data: "popUp",
 				"args": {peer: peer+1,
