@@ -30,10 +30,10 @@ function change(but){
 
 
 
-function CreateParagraph(peer,cantRess){
+function CreateParagraph(peer,cantRess,find){
 	p=document.createElement("p");	
 	prom=((cantRess/peer)>>0);
-	p.innerText="el promedio es: "+prom;
+	p.innerText="el promedio es: "+prom+" ("+find+" de "+peer+")";
 	p.id="prom";
 	return p;
 }
@@ -44,7 +44,7 @@ function removeParagraph(li){
 	}
 }
 
-function chargeResult(array,peer){
+function chargeResult(array,peer,find){
 	li=document.getElementById("res").children
 	for(i=0;i<15;i++){
 		removeParagraph(li[i])

@@ -232,7 +232,8 @@ class ContentPageManager {
 		browser.runtime.sendMessage({
 				data: "popUp",
 				"args": {peer: peer+1,
-						 prom:this.prom}
+						 prom:this.prom,
+						 find:this.find}
 		}, function (response) {
                     console.log(response);
          });
