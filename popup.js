@@ -49,8 +49,11 @@ function chargeResult(array,peer){
 	 console.log("aca tambien")
 	for(i=0;i<15;i++){
 		removeParagraph(li[i])
+		console.log("paso el remove")
 		p=CreateParagraph(peer,array[i]);
+		console.log("paso el create")
 		li[i].appendChild(p);
+		console.log("lo puso como hijo de fruta")
 	}
 	 console.log("aca no se rompe")
 }
