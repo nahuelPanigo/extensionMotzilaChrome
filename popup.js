@@ -46,11 +46,13 @@ function removeParagraph(li){
 
 function chargeResult(array,peer){
 	li=document.getElementById("res").children
+	 console.log("aca tambien")
 	for(i=0;i<15;i++){
 		removeParagraph(li[i])
 		p=CreateParagraph(peer,array[i]);
 		li[i].appendChild(p);
 	}
+	 console.log("aca no se rompe")
 }
 
 
@@ -58,13 +60,9 @@ browser.runtime.onMessage.addListener(function (message, sender,sendResponse) {
 	if(message.data==="popUp"){
 		    console.log(message);
 		    calls++;
-		    changeResult(message.args.prom,message.args.peer)
-		    for(i=0;i<15;i++){
-		    	//p=document.createElement("p");
-		   		//p.innerText("nahuel")
-		    	//array[i].appendChild(p);
-		    }
-		    //document.appendChild(p);
+		    console.log("aca llega")
+		    changeResult(message.args.prom,message.args.peer);
+		     console.log("aca si")
 		    sendResponse({
 		        data: "I am fine, thank you. How is life in the background?"
 		    });
