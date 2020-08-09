@@ -1,7 +1,7 @@
 body{
 	background-color: #292a2d;
 	color:#5f6368;
-	width: 500px;
+	width: 420px;
 	text-decoration: none;
 }
 h1{
@@ -15,6 +15,7 @@ a {
 	color: #5f6368;
 	text-decoration: none;
 	text-align: left;
+	display:inline-block;
 }
 p{
 	color: white;
