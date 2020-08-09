@@ -6,11 +6,9 @@ class ContentPageManager {
 	find;
 
 	initializeEqual(){
-		console.log("principio");
 		this.equal=new Array(5);
 		this.prom=new Array(15);
 		this.find=new Array(15);
-		console.log("anda");
 		for (var j=0;j<5;j++){
 			for (var i=0;i<3;i++){
 				this.prom[i+j*3]=j+1;
@@ -20,7 +18,6 @@ class ContentPageManager {
 		for (var i=0;i<5;i++){
 			this.equal[i]=0;
 		}
-		console.log("aca tambien")
 	}
 	
 	equalResult(j){
@@ -309,11 +306,13 @@ var peer=0;
 var array;
 pageManager.getResults(col).then(requ=>{
 		pageManager.setEngineUri(requ[2]);
+		console.log("function");
 		browser.runtime.sendMessage({
 				"call": "searchNewRequest",
 				"args": {req: requ[1],
 						engine: requ[2]}
 		}).then( requests=>{
+					console.log("aca tambien");
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 					array = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
