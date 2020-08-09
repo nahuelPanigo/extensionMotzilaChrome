@@ -42,7 +42,7 @@ function removeParagraph(li){
 	console.log("estoy en el remove")
 	console.log(li)
 	console.log(calls)
-	if(calls>0){
+	if(calls>1){
 		li.removeChildren(li.prom)
 	}
 }
