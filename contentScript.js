@@ -3,7 +3,7 @@ class ContentPageManager {
 	equal;
 	engineUri;
 	prom;
-	//find;
+	find;
 
 	initializeEqual(){
 		console.log("principio");
