@@ -225,6 +225,7 @@ class ContentPageManager {
 	}
 
 	callPopUpAndGiveResult(result,peer,array){
+		console.log(array);
 		for (var i = 0; i<3 ; i++) {
 			for (var j = 0; j<5 ; j++) {
 				for (var k = 0; k<5 ; k++) {
