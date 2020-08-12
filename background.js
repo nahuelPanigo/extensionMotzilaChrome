@@ -116,7 +116,7 @@ class Duck{
 			});
 		});
 	}
-
+	
 	parseResults(doc){
 		var col,array
 		var array= new Array(5);
