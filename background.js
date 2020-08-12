@@ -179,8 +179,6 @@ search;
 		self = extension;
 		try {
 			let listaUsuarios = extension.getDataCallBack();
-			console.log('Usuarios peers');
-			console.log(listaUsuarios);
 			self.peers = [];
 			for (let i in listaUsuarios){
 				if (listaUsuarios.hasOwnProperty(i)){
@@ -188,7 +186,6 @@ search;
 				}
 			};
 		} catch(e) {
-				console.log("Error al cargar lista de usuarios");
 				console.log(e);
 		}
     }
@@ -247,26 +244,20 @@ search;
 
 
 		async automaticProcessing(msg , peer){
-		console.log('Pedido de: ' + peer);
-		console.log(msg);
 		var array,eng;
 		await this.request(msg.str,msg.value).then(req => {
 			eng=this.makeEngine(msg.str);
 			array = eng.parseResults(req);
-			console.log("reqs obtained :");
-			console.log(array);
 			this.sendResponse({
 				'req':array,
 				automatic:true,
 				withoutcheck:true
 			},peer);
-			console.log('Response sent');
 		})
 	}
 
 
 		receiveResponse(msg, peer){
-		console.log("Response Received " + peer);
 		browser.tabs.query({active: true, windowId: browser.windows.WINDOW_ID_CURRENT}).then(tabs => {
 		browser.tabs.sendMessage(tabs[0].id,{
     		call: "peerRequests",
@@ -278,35 +269,17 @@ search;
 
 	searchNewRequest(value){
 			return new Promise((resolve,reject)=>{
-			this.setSearch(value.req);
-			if(value.engine.match('https://www.google')){
-				this.engine = new Google();
+				this.makeEngine(value.engine);
 				this.engine.makeRequests(value,this).then((pr)=>{
-					resolve(pr)
-			});
-			}else{
-				if(value.engine.match('https://www.bing')){
-					this.engine = new Bing();
-					this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
-					});
-				}
-				else{
-					this.engine =new Duck();
-					this.engine.makeRequests(value,this).then((pr)=>{
-						resolve(pr);
-					});
-				}
+				});
 			}
-		});
 	}
 
 	setPeers(event){
 		self = extension;
 		try {
 			let listaUsuarios = extension.getDataCallBack();
-			console.log('Usuarios peers');
-			console.log(listaUsuarios);
 			self.peers = [];
 			for (let i in listaUsuarios){
 				if (listaUsuarios.hasOwnProperty(i)){
@@ -314,7 +287,6 @@ search;
 				}
 			};
 		} catch(e) {
-				console.log("Error al cargar lista de usuarios");
 				console.log(e);
 		}
     }
