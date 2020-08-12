@@ -215,7 +215,7 @@ class ContentPageManager {
 				else{
 					ind1=0;ind2=1;
     				var Res=document.querySelectorAll("a.result__url");
-					value=document.getElementById('search_form_input_homepage').value	
+					value=document.getElementById('search_form_input').value	
 					for (var i = 0 ; i< 5 ; i++) {
 							array[i]=(Res[i].href);//get only the urls DUCK
 					}
@@ -306,13 +306,11 @@ var peer=0;
 var array;
 pageManager.getResults(col).then(requ=>{
 		pageManager.setEngineUri(requ[2]);
-		console.log("function");
 		browser.runtime.sendMessage({
 				"call": "searchNewRequest",
 				"args": {req: requ[1],
 						engine: requ[2]}
 		}).then( requests=>{
-					console.log("aca tambien");
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 					array = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
