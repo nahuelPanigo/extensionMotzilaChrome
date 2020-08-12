@@ -269,7 +269,8 @@ search;
 
 	searchNewRequest(value){
 			return new Promise((resolve,reject)=>{
-				this.makeEngine(value.engine);
+				console.log("nahuel");
+				this.setEngine(this.makeEngine(value.engine));
 				this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
 				});
@@ -304,6 +305,7 @@ var startBackground = async function(config) {
 				extension.getResultsFromPeers();
 			}else{
 			promise=extension[request.call](request.args);
+			console.log(promise);
 			return promise;
 			}
 		}
