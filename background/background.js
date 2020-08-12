@@ -281,16 +281,23 @@ search;
 			this.setSearch(value.req);
 			if(value.engine.match('https://www.google')){
 				this.engine = new Google();
+				this.engine.makeRequests(value,this).then((pr)=>{
+					resolve(pr)
+			});
 			}else{
 				if(value.engine.match('https://www.bing')){
 					this.engine = new Bing();
-				}else{
-					this.engine =new Duck();
-				}
-			}
-			this.engine.makeRequests(value,this).then((pr)=>{
+					this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
 					});
+				}
+				else{
+					this.engine =new Duck();
+					this.engine.makeRequests(value,this).then((pr)=>{
+						resolve(pr);
+					});
+				}
+			}
 		});
 	}
 
@@ -298,6 +305,8 @@ search;
 		self = extension;
 		try {
 			let listaUsuarios = extension.getDataCallBack();
+			console.log('Usuarios peers');
+			console.log(listaUsuarios);
 			self.peers = [];
 			for (let i in listaUsuarios){
 				if (listaUsuarios.hasOwnProperty(i)){
@@ -305,6 +314,7 @@ search;
 				}
 			};
 		} catch(e) {
+				console.log("Error al cargar lista de usuarios");
 				console.log(e);
 		}
     }
