@@ -273,7 +273,7 @@ search;
 				this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
 				});
-			}
+			});
 	}
 
 	setPeers(event){
