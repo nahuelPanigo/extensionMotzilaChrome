@@ -36,6 +36,7 @@ function CreateParagraph(peer,cantRess,find){
 	p.innerText="el promedio es: "+prom+" ("+find+" de "+peer+")";
 	p.id="prom";
 	return p;
+	
 }
 
 function removeParagraph(li){
