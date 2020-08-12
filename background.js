@@ -6,6 +6,7 @@ class Google{
 		var col1,col2;
 		var array1 = new Array(5);
 		var array2 = new Array(5);
+		console.log(value)
 		back.doRequest(string1).then(responseData=>{
 				col1=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
@@ -17,6 +18,7 @@ class Google{
 			});
 			back.doRequest(string2).then(responseData=>{
 				col2=responseData.getElementsByClassName('result__extras__url');
+				console.log(col2);
 				for (var i = 0; i < 5 ; i++) {
 						array2[i]=col2[i].getElementsByTagName('a')[0].href;
 				}					
@@ -269,8 +271,8 @@ search;
 
 	searchNewRequest(value){
 			return new Promise((resolve,reject)=>{
-				console.log("nahuel");
 				this.setEngine(this.makeEngine(value.engine));
+				console.log(this.engine);
 				this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
 				});
