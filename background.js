@@ -251,7 +251,6 @@ search;
 		console.log('Pedido de: ' + peer);
 		console.log(msg);
 		var array,eng;
-		console.log("hola")
 		await this.request(msg.str,msg.value).then(req => {
 			eng=this.makeEngine(msg.str);
 			array = eng.parseResults(req);

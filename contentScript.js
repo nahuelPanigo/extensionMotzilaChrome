@@ -5,7 +5,7 @@ class ContentPageManager {
 	prom;
 	find;
 
-	initializeEqual(){
+	init(){
 		this.equal=new Array(5);
 		this.prom=new Array(15);
 		this.find=new Array(15);
@@ -107,31 +107,28 @@ class ContentPageManager {
 	}	
 
 
+	iterateAndAddImages(actUrl,reqUrl,array,id){
+		var img
+		for (var j = 0; j < 5; j++) {
+				if(this.equalUri(actUrl,reqUrl[j])){
+					img=this.createImage(id,array[j],"45px");
+					break;
+				}else{
+					if(j===4){
+						img=this.createImage(id,array[5],"45px");
+					}
+				}
+		}
+		return img;	
+	}
+
 	allRequests(requests,array1,array2,array,engine){
 		this.setRequest(array);
 		this.getDivs(engine).then(value =>{
 				for (var i = 0; i < 5; i++) {
 					var img,img2;
-					for (var j = 0; j < 5; j++) {
-						if(this.equalUri(array[i],requests[0][j])){
-							img=this.createImage("img1",array1[j],"45px");
-							break;
-						}else{
-							if(j===4){
-								img=this.createImage("img1",array1[5],"45px");
-							}
-						}
-					}	
-					for (var k = 0; k < 5; k++) {
-							if(this.equalUri(array[i],requests[1][k])){
-								img2=this.createImage("img2",array2[k],"45px");
-								break;
-							}else{
-								if(k===4){
-									img2=this.createImage("img2",array2[5],"45px");
-								}
-							}
-					}
+					img = this.iterateAndAddImages(array[i],request[0],array1,"img1")	
+					img2= this.iterateAndAddImages(array[i],request[1],array2,"img2")
 				value[i].appendChild(img);
 				value[i].appendChild(img2);
 		}
@@ -301,7 +298,7 @@ let filesP=[
 ]
 let col=[filesG,filesB,filesD]
 var pageManager = new ContentPageManager();
-pageManager.initializeEqual();
+pageManager.init();
 var peer=0;
 var array;
 pageManager.getResults(col).then(requ=>{
@@ -333,7 +330,6 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
-		console.log("se obtuvo la respuesta de los peers en contetn")
 		pageManager.peerRequests(requests.args.args,filesP,peer);
 		pageManager.callPopUpAndGiveResult(requests.args.args,peer,array);
 	}
