@@ -333,6 +333,7 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
+		console.log("se obtuvo la respuesta de los peers en contetn")
 		pageManager.peerRequests(requests.args.args,filesP,peer);
 		pageManager.callPopUpAndGiveResult(requests.args.args,peer,array);
 	}

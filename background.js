@@ -116,7 +116,7 @@ class Duck{
 			});
 		});
 	}
-	
+
 	parseResults(doc){
 		var col,array
 		var array= new Array(5);
@@ -240,6 +240,7 @@ search;
 				automatic:true,
 				withoutcheck:true
 			  },"All");
+			console.log("se envio el mensaje a los peers")
 		  }catch(error){
 			console.log("Error al utilizar sendurl");
 	  }
@@ -250,6 +251,7 @@ search;
 		console.log('Pedido de: ' + peer);
 		console.log(msg);
 		var array,eng;
+		console.log("hola")
 		await this.request(msg.str,msg.value).then(req => {
 			eng=this.makeEngine(msg.str);
 			array = eng.parseResults(req);
@@ -329,6 +331,7 @@ var startBackground = async function(config) {
 	  browser.runtime.onMessage.addListener((request, sender) => {
 		if(extension[request.call]){
 			if(request.call==="getResultsFromPeers"){
+				console.log("aca se tiene el mensaje para buscar de los peers")
 				extension.getResultsFromPeers();
 			}else{
 			promise=extension[request.call](request.args);
