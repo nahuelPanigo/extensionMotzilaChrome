@@ -175,24 +175,6 @@ search;
 		});
 	}
 
-	setPeers(event){
-		self = extension;
-		try {
-			let listaUsuarios = extension.getDataCallBack();
-			console.log('Usuarios peers');
-			console.log(listaUsuarios);
-			self.peers = [];
-			for (let i in listaUsuarios){
-				if (listaUsuarios.hasOwnProperty(i)){
-				  self.peers.push(listaUsuarios[i]);
-				}
-			};
-		} catch(e) {
-				console.log("Error al cargar lista de usuarios");
-				console.log(e);
-		}
-    }
-
 
 
 	async request(string,req){
@@ -240,7 +222,6 @@ search;
 				automatic:true,
 				withoutcheck:true
 			  },"All");
-			console.log("se envio el mensaje a los peers")
 		  }catch(error){
 			console.log("Error al utilizar sendurl");
 	  }
@@ -248,26 +229,21 @@ search;
 
 
 		async automaticProcessing(msg , peer){
-		console.log('Pedido de: ' + peer);
 		console.log(msg);
 		var array,eng;
 		await this.request(msg.str,msg.value).then(req => {
 			eng=this.makeEngine(msg.str);
 			array = eng.parseResults(req);
-			console.log("reqs obtained :");
-			console.log(array);
 			this.sendResponse({
 				'req':array,
 				automatic:true,
 				withoutcheck:true
 			},peer);
-			console.log('Response sent');
 		})
 	}
 
 
 		receiveResponse(msg, peer){
-		console.log("Response Received " + peer);
 		browser.tabs.query({active: true, windowId: browser.windows.WINDOW_ID_CURRENT}).then(tabs => {
 		browser.tabs.sendMessage(tabs[0].id,{
     		call: "peerRequests",
@@ -277,6 +253,7 @@ search;
     	}
 
 
+//first method callesd by contetn create engine and call method make request to get the results
 	searchNewRequest(value){
 			return new Promise((resolve,reject)=>{
 			this.setSearch(value.req);
@@ -306,7 +283,6 @@ search;
 		self = extension;
 		try {
 			let listaUsuarios = extension.getDataCallBack();
-			console.log('Usuarios peers');
 			console.log(listaUsuarios);
 			self.peers = [];
 			for (let i in listaUsuarios){
@@ -315,7 +291,6 @@ search;
 				}
 			};
 		} catch(e) {
-				console.log("Error al cargar lista de usuarios");
 				console.log(e);
 		}
     }
@@ -330,7 +305,6 @@ var startBackground = async function(config) {
 	  browser.runtime.onMessage.addListener((request, sender) => {
 		if(extension[request.call]){
 			if(request.call==="getResultsFromPeers"){
-				console.log("aca se tiene el mensaje para buscar de los peers")
 				extension.getResultsFromPeers();
 			}else{
 			promise=extension[request.call](request.args);

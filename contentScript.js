@@ -5,6 +5,7 @@ class ContentPageManager {
 	prom;
 	find;
 
+	//initialize arrays and set array prom with the pos of the first results
 	init(){
 		this.equal=new Array(5);
 		this.prom=new Array(15);
@@ -36,6 +37,7 @@ class ContentPageManager {
 		this.request=array;
 	}
 
+	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
 	getArrays(array1y2,array,engine){
 		var arrayg,arrayb,arrayd;
 		var res=new Array(15);
@@ -65,6 +67,7 @@ class ContentPageManager {
 		return res;
 	}
 
+	//get a promise with the divs of the engine where the user search
 	getDivs(engine){
 		return new Promise((resolve,reject)=>{
 			if(engine.match("https://www.google")){
@@ -79,7 +82,7 @@ class ContentPageManager {
 		});
 	}
 
-
+	//compare 2 urls passed 
 	equalUri(str1,str2){
 		if(str1.length>str2.length){
 					var string1=str1;
@@ -97,6 +100,7 @@ class ContentPageManager {
 		return string1.match(string2)
 	}
 
+	//create an image with a name,file path and pixels given 
 	createImage(id,file,px){
 		var img=document.createElement("img");
 		img.style.width=px;
@@ -106,7 +110,7 @@ class ContentPageManager {
 		return img;
 	}	
 
-
+	//create and image to add to the div
 	iterateAndAddImages(actUrl,reqUrl,array,id){
 		var img
 		for (var j = 0; j < 5; j++) {
@@ -122,6 +126,8 @@ class ContentPageManager {
 		return img;	
 	}
 
+
+	//itearate for the first 5 divs creating 2 images of the others search engine for each div
 	allRequests(requests,array1,array2,array,engine){
 		this.setRequest(array);
 		this.getDivs(engine).then(value =>{
@@ -135,12 +141,14 @@ class ContentPageManager {
 		});
 	}
 
+	//move images for agroup in circle image
 	moveImage(img,left,top,pos){
 		img.style.position=pos;
 		img.style.top=top;
 		img.style.left=left;
 	}
 
+	//call create and move
 	createAndMove(name,path,px,left,top,pos){
 		var img=this.createImage(name,path,px);
 		this.moveImage(img,left,top,pos);
@@ -150,7 +158,7 @@ class ContentPageManager {
 	peerRequests(peerReq,files,peer){
 		this.getDivs(this.engineUri).then(value =>{
 				for (var i = 0; i < 5; i++) {//iterate in te first 5 divs for paste image
-					var imgCirculo=this.createImage("circulo",files[10],"50px")//not need to move this img
+					var imgCirculo=this.createImage("circulo",files[10],"50px");
 					var imgDe=this.createAndMove("De",files[11],"15px","60px","5px","relative");
 					for(var j=0; j<5 ;j++){//iterate in results and check match
 						if(this.request[j].match(peerReq[i])){
@@ -222,6 +230,7 @@ class ContentPageManager {
 		});
 	}
 
+	//send the results from peers to the popUp
 	sendMessageToPop(peer){
 		console.log(this.find);
 		browser.runtime.sendMessage({
@@ -234,6 +243,7 @@ class ContentPageManager {
          });
 	}
 
+//charge results of the results from peer and call method to send message to the PopUp
 	callPopUpAndGiveResult(result,peer,array){
 		console.log(array);
 		for (var i = 0; i<15 ; i++) {
@@ -301,12 +311,12 @@ var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
 var array;
-pageManager.getResults(col).then(requ=>{
-		pageManager.setEngineUri(requ[2]);
-		browser.runtime.sendMessage({
+pageManager.getResults(col).then(requ=>{  //get the results from the users search 
+		pageManager.setEngineUri(requ[2]); //set engine url 
+		browser.runtime.sendMessage({	//call background for results in the other 2 engines
 				"call": "searchNewRequest",
-				"args": {req: requ[1],
-						engine: requ[2]}
+				"args": {req: requ[1],	// search value
+						engine: requ[2]}  //engine
 		}).then( requests=>{
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 					array = pageManager.getArrays(requests,requ[0],requ[2]);
