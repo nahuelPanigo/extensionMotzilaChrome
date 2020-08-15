@@ -127,8 +127,8 @@ class ContentPageManager {
 		this.getDivs(engine).then(value =>{
 				for (var i = 0; i < 5; i++) {
 					var img,img2;
-					img = this.iterateAndAddImages(array[i],request[0],array1,"img1")	
-					img2= this.iterateAndAddImages(array[i],request[1],array2,"img2")
+					img = this.iterateAndAddImages(array[i],requests[0],array1,"img1")	
+					img2= this.iterateAndAddImages(array[i],requests[1],array2,"img2")
 				value[i].appendChild(img);
 				value[i].appendChild(img2);
 		}
