@@ -3,24 +3,24 @@ class Google{
 		return new Promise((resolve,reject)=>{ 
 		var strBing="https://www.bing.com/search?q=";
 		var strDuck="https://duckduckgo.com/html/?q=";
-		var col1,col2;
+		var divsBing,divsDuck;
 		var divUrlBing = new Array(5);
 		var divUrlDuck = new Array(5);
 		back.doRequest(strBing).then(responseData=>{
-				col1=responseData.querySelectorAll('div.b_attribution');
+				divsBing=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
-						divUrlBing[i]=col1[i].innerText;
+						divUrlBing[i]=divsBing[i].innerText;
 				}	
-				if(col2 !== undefined){
+				if(divsDuck !== undefined){
 						resolve([divUrlBing,divUrlDuck]);
 					}
 			});
 			back.doRequest(strDuck).then(responseData=>{
-				col2=responseData.getElementsByClassName('result__extras__url');
+				divsDuck=responseData.getElementsByClassName('result__extras__url');
 				for (var i = 0; i < 5 ; i++) {
-						divUrlDuck[i]=col2[i].getElementsByTagName('a')[0].href;
+						divUrlDuck[i]=divsDuck[i].getElementsByTagName('a')[0].href;
 				}					
-				if(col1!==undefined){
+				if(divsBing!==undefined){
 					resolve([divUrlBing,divUrlDuck]);
 				}
 			});
@@ -90,26 +90,26 @@ class Duck{
 		return new Promise((resolve,reject)=>{ 
 			var strGoogle="https://www.google.com/search?q=";
 			var strBing="https://www.bing.com/search?q=";
-			var col1,col2;
+			var divsGoogle,divsBing;
 			var divUrlGoogle= new Array(5);
 			var divUrlBing= new Array(5);
 			//get from google from my navegator
 			back.doRequest(strGoogle).then(responseData=>{
-					col1=responseData.querySelectorAll('div.r');
+					divsGoogle=responseData.querySelectorAll('div.r');
 					for (var i = 0; i < 5 ; i++) {
-							divUrlGoogle[i]=col1[i].getElementsByTagName('a')[0].href;
+							divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
 					}	
-					if(col2 !== undefined){
+					if(divsBing !== undefined){
 							resolve([divUrlGoogle,divUrlBing])
 						}
 			});
 			//get from bing from my navegator
 			back.doRequest(strBing).then(responseData=>{
-				col2=responseData.querySelectorAll('div.b_attribution');
+				divsBing=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
-						divUrlBing[i]=col2[i].innerText;
+						divUrlBing[i]=divsBing[i].innerText;
 				}	
-				if(col1 !== undefined){
+				if(divsGoogle !== undefined){
 						resolve([divUrlGoogle,divUrlBing]);
 					}
 			});
