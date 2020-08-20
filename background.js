@@ -1,40 +1,40 @@
 class Google{
 	makeRequests(value,back){
 		return new Promise((resolve,reject)=>{ 
-		var string1="https://www.bing.com/search?q=";
-		var string2="https://duckduckgo.com/html/?q=";
+		var strBing="https://www.bing.com/search?q=";
+		var strDuck="https://duckduckgo.com/html/?q=";
 		var col1,col2;
-		var array1 = new Array(5);
-		var array2 = new Array(5);
-		back.doRequest(string1).then(responseData=>{
+		var divUrlBing = new Array(5);
+		var divUrlDuck = new Array(5);
+		back.doRequest(strBing).then(responseData=>{
 				col1=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
-						array1[i]=col1[i].innerText;
+						divUrlBing[i]=col1[i].innerText;
 				}	
 				if(col2 !== undefined){
-						resolve([array1,array2]);
+						resolve([divUrlBing,divUrlDuck]);
 					}
 			});
-			back.doRequest(string2).then(responseData=>{
+			back.doRequest(strDuck).then(responseData=>{
 				col2=responseData.getElementsByClassName('result__extras__url');
 				for (var i = 0; i < 5 ; i++) {
-						array2[i]=col2[i].getElementsByTagName('a')[0].href;
+						divUrlDuck[i]=col2[i].getElementsByTagName('a')[0].href;
 				}					
 				if(col1!==undefined){
-					resolve([array1,array2]);
+					resolve([divUrlBing,divUrlDuck]);
 				}
 			});
 		})
 	}
 
 	parseResults(doc){
-		var col,array
-		var array= new Array(5);
-		col=doc.querySelectorAll('div.r');
+		var divs,urls
+		var urls= new Array(5);
+		divs=doc.querySelectorAll('div.r');
 					for (var i = 0; i < 5 ; i++) {
-							array[i]=col[i].getElementsByTagName('a')[0].href;
+							urls[i]=divs[i].getElementsByTagName('a')[0].href;
 					}
-		return array;
+		return urls;
 	}
 
 	getString(){
@@ -44,40 +44,39 @@ class Google{
 class Bing{
 	makeRequests(value,back){
 		return new Promise((resolve,reject)=>{ 
-			var string1="https://www.google.com/search?q=";
-			var string2="https://duckduckgo.com/html/?q="
+			var strGoogle="https://www.google.com/search?q=";
+			var strDuck="https://duckduckgo.com/html/?q="
 			var col1,col2;
-			var array1= new Array(5);
-			var array2= new Array(5);
-			back.doRequest(string1).then(responseData=>{
+			var divUrlGoogle= new Array(5);
+			var divUrlDuck= new Array(5);
+			back.doRequest(strGoogle).then(responseData=>{
 					col1=responseData.querySelectorAll('div.r');
 					for (var i = 0; i < 5 ; i++) {
-							array1[i]=col1[i].getElementsByTagName('a')[0].href;
+							divUrlGoogle[i]=col1[i].getElementsByTagName('a')[0].href;
 					}	
 					if(col2 !== undefined){
-							resolve([array1,array2])
+							resolve([divUrlGoogle,divUrlDuck])
 						}
 			});
-			back.doRequest(string2).then(responseData=>{
+			back.doRequest(strDuck).then(responseData=>{
 					col2=responseData.getElementsByClassName('result__extras__url');
 					for (var i = 0; i < 5 ; i++) {
-							array2[i]=col2[i].getElementsByTagName('a')[0].href;
+							divUrlDuck[i]=col2[i].getElementsByTagName('a')[0].href;
 					}					
 					if(col1!==undefined){
-						resolve([array1,array2])
+						resolve([divUrlGoogle,divUrlDuck])
 					}
 			});
 		});
 	}
 	parseResults(doc){
-		var col,array
-		var array= new Array(5);
-		col=doc.querySelectorAll('div.b_attribution');
+		var divs,urls
+		var urls= new Array(5);
+		divs=doc.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
-						array[i]=(col[i].innerText);
+						urls[i]=(divs[i].innerText);
 				}
-				console.log(array);
-	return array;
+	return urls;
 	}
 
 	getString(){
@@ -89,42 +88,42 @@ class Duck{
 
 	makeRequests(value,back){
 		return new Promise((resolve,reject)=>{ 
-			var string1="https://www.google.com/search?q=";
-			var string2="https://www.bing.com/search?q=";
+			var strGoogle="https://www.google.com/search?q=";
+			var strBing="https://www.bing.com/search?q=";
 			var col1,col2;
-			var array1= new Array(5);
-			var array2= new Array(5);
+			var divUrlGoogle= new Array(5);
+			var divUrlBing= new Array(5);
 			//get from google from my navegator
-			back.doRequest(string1).then(responseData=>{
+			back.doRequest(strGoogle).then(responseData=>{
 					col1=responseData.querySelectorAll('div.r');
 					for (var i = 0; i < 5 ; i++) {
-							array1[i]=col1[i].getElementsByTagName('a')[0].href;
+							divUrlGoogle[i]=col1[i].getElementsByTagName('a')[0].href;
 					}	
 					if(col2 !== undefined){
-							resolve([array1,array2])
+							resolve([divUrlGoogle,divUrlBing])
 						}
 			});
 			//get from bing from my navegator
-			back.doRequest(string2).then(responseData=>{
+			back.doRequest(strBing).then(responseData=>{
 				col2=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
-						array2[i]=col2[i].innerText;
+						divUrlBing[i]=col2[i].innerText;
 				}	
 				if(col1 !== undefined){
-						resolve([array1,array2]);
+						resolve([divUrlGoogle,divUrlBing]);
 					}
 			});
 		});
 	}
 
 	parseResults(doc){
-		var col,array
-		var array= new Array(5);
-		col=doc.getElementsByClassName('result__extras__url');
+		var divs,urls
+		var urls= new Array(5);
+		divs=doc.getElementsByClassName('result__extras__url');
 					for (var i = 0; i < 5 ; i++) {
-							array[i]=col[i].getElementsByTagName('a')[0].href;
+							urls[i]=divs[i].getElementsByTagName('a')[0].href;
 					}
-		return array;
+		return urls;
 	}
 
 
