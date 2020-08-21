@@ -14,6 +14,8 @@ class SolveResults{
 				}
 			}
 		}
+
+
 		getResArrays(array1y2,array,engine){
 		var arrayg,arrayb,arrayd;
 		var res=new Array(15);
@@ -69,25 +71,23 @@ class SolveResults{
 	}
 
 	googleUris(){
-		urls =Array new (5)
+		urls =new Array(5)
 		var divs=document.querySelectorAll('div.r');
 		for (var i = 0 ; i< divs.length ; i++) {
 			urls[i]=(divs[i].getElementsByTagName('a')[0].href);//get only the urls GOOGLE
 		}
 		return urls;
 	}
-
 	bingUris(){
-		urls =Array new (5)
+		urls = new Array(5)
 		var divs=document.querySelectorAll('div.b_attribution');
 		for (var i = 0 ; i< divs.length ; i++){
 			urls[i]=(divs[i].innerText);//get only the urls BING
 		}
 		return urls;
 	}
-
 	duckUris(){
-		urls =Array new (5)
+		urls = new Array(5)
 		var divs=document.querySelectorAll("a.result__url");
 		for (var i = 0 ; i< divs.length ; i++){
 			urls[i]=(divs[i].innerText);//get only the urls BING
@@ -271,21 +271,19 @@ class ContentPageManager {
 					value=document.getElementsByClassName("gLFyf gsfi")[0].value;
 					ind1=1;ind2=2;
 					urls = this.solveRes.googleUris();
-					resolve([array,value,searchEngine,ind1,ind2]); //urls, what user searhc,engine, index for img
 			}else{
 				if(searchEngine.match('https://www.bing')){
 					ind1=0;ind2=2;
 					value=document.getElementById('sb_form_q').value
 					urls = this.solveRes.bingUris();
-					resolve([array,value,searchEngine,ind1,ind2]);//urls, what user searhc,engine, index for img
 				}
 				else{
 					ind1=0;ind2=1;
     				value=document.getElementById('search_form_input').value
 					urls = this.solveRes.duckUris();
-					resolve([urls,value,searchEngine,ind1,ind2])//urls, what user searhc,engine, index for img
 				}
 			}
+			resolve([urls,value,searchEngine,ind1,ind2]);//urls, what user searhc,engine, index for img
 		});
 	}
 
@@ -351,6 +349,7 @@ let filesP=[
 "logos/De.png"
 ]
 let col=[filesG,filesB,filesD]
+console.log("anda")
 var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
