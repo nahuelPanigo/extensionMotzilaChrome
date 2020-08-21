@@ -269,7 +269,6 @@ class ContentPageManager {
 			if(searchEngine.match('https://www.google')){
 					value=document.getElementsByClassName("gLFyf gsfi")[0].value;
 					ind1=1;ind2=2;
-					console.log(this.solveRes)
 					urls = this.solveRes.googleUris();
 			}else{
 				if(searchEngine.match('https://www.bing')){
@@ -301,10 +300,9 @@ class ContentPageManager {
 
 //charge results of the results from peer and call method to send message to the PopUp
 	callPopUpAndGiveResult(result,peer,array){
-		console.log(array);
+		console.log(result)
+		console.log(array)
 		this.solveRes.setProm(result,array);
-		console.log(this.solveRes.getProm());
-		console.log(this.solveRes.getCantFind());
 		this.sendMessageToPop(peer);
 	}
 
