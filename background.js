@@ -198,6 +198,7 @@ search;
 				this.engine =new Duck();
 			}
 		}
+		console.log(" no se rompe en make engine")
 		return this.engine
 	}
 
@@ -255,9 +256,11 @@ search;
 
 //first method callesd by contetn create engine and call method make request to get the results
 	searchNewRequest(value){
+			console.log("se ejecuta el metodo")
 			return new Promise((resolve,reject)=>{
 			this.setSearch(value.req);
 			this.makeEngine(value.engine)
+			console.log("aca llega")
 			this.engine.makeRequests(value,this).then((pr)=>{
 						resolve(pr);
 			});
