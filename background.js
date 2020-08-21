@@ -8,18 +8,14 @@ class Google{
 		var divUrlDuck = new Array(5);
 		back.doRequest(strBing).then(responseData=>{
 				divsBing=responseData.querySelectorAll('div.b_attribution');
-				for (var i = 0; i < 5 ; i++) {
-						divUrlBing[i]=divsBing[i].innerText;
-				}	
+				divUrlBing = back.parseBingDivs(divsBing,divUrlBing);	
 				if(divsDuck !== undefined){
 						resolve([divUrlBing,divUrlDuck]);
 					}
 			});
 			back.doRequest(strDuck).then(responseData=>{
 				divsDuck=responseData.getElementsByClassName('result__extras__url');
-				for (var i = 0; i < 5 ; i++) {
-						divUrlDuck[i]=divsDuck[i].getElementsByTagName('a')[0].href;
-				}					
+				divUrlDuck = back.parseGoogleDivs(divsDuck,divUrlDuck);					
 				if(divsBing!==undefined){
 					resolve([divUrlBing,divUrlDuck]);
 				}
@@ -51,18 +47,14 @@ class Bing{
 			var divUrlDuck= new Array(5);
 			back.doRequest(strGoogle).then(responseData=>{
 					divsGoogle=responseData.querySelectorAll('div.r');
-					for (var i = 0; i < 5 ; i++) {
-							divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
-					}	
+					divUrlGoogle = back.parseGoogleDivs(divsGoogle,divUrlGoogle);	
 					if(divsDuck !== undefined){
 							resolve([divUrlGoogle,divUrlDuck])
 						}
 			});
 			back.doRequest(strDuck).then(responseData=>{
 					divsDuck=responseData.getElementsByClassName('result__extras__url');
-					for (var i = 0; i < 5 ; i++) {
-							divUrlDuck[i]=divsDuck[i].getElementsByTagName('a')[0].href;
-					}					
+					divUrlDuck = back.parseGoogleDivs(divsDuck,divUrlDuck);				
 					if(divsGoogle!==undefined){
 						resolve([divUrlGoogle,divUrlDuck])
 					}
@@ -104,9 +96,7 @@ class Duck{
 			//get request from bing from my navegator
 			back.doRequest(strBing).then(responseData=>{
 				divsBing=responseData.querySelectorAll('div.b_attribution');
-				for (var i = 0; i < 5 ; i++) {
-						divUrlBing[i]=divsBing[i].innerText;
-				}	
+				divUrlBing = back.parseBingDivs(divsBing,divUrlBing);	
 				if(divsGoogle !== undefined){
 						resolve([divUrlGoogle,divUrlBing]);
 					}
@@ -137,13 +127,25 @@ engine;
 search;
 
 	parseGoogleDivs(divsGoogle,divUrlGoogle){
-					for (var i = 0; i < 5 ; i++) {
-							divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
-					}
-					return divUrlGoogle
+				for (var i = 0; i < 5 ; i++) {
+						divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
+				}
+				return divUrlGoogle
 	}
 
+	parseBingDivs(divsBing,divUrlBing){
+				for (var i = 0; i < 5 ; i++) {
+						divUrlBing[i]=divsBing[i].innerText;
+				}
+				return divUrlBing
+	}
 
+	parseBingDivs(divsBing,divUrlBing){
+				for (var i = 0; i < 5 ; i++) {
+						divUrlDuck[i]=divsDuck[i].getElementsByTagName('a')[0].href;
+				}
+				return divUrlDuck
+	}	
 
 	setEngine(eng){
 		this.engine=eng;
