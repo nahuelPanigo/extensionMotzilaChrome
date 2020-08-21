@@ -190,14 +190,15 @@ search;
 
 	makeEngine(engine){
 		if(engine.match('https://www.google')){
-			return new Google();
+			 this.engin = new Google();
 		}else{
 			if(engine.match('https://www.bing')){
-				return new Bing();
+				this.engine = new Bing();
 			}else{
-				return new Duck();
+				this.engine =new Duck();
 			}
 		}
+		return this.engine
 	}
 
 	doRequest(string){
@@ -256,26 +257,11 @@ search;
 	searchNewRequest(value){
 			return new Promise((resolve,reject)=>{
 			this.setSearch(value.req);
-			if(value.engine.match('https://www.google')){
-				this.engine = new Google();
-				this.engine.makeRequests(value,this).then((pr)=>{
-					resolve(pr)
+			this.makeEngine(value.engine)
+			this.engine.makeRequests(value,this).then((pr)=>{
+						resolve(pr);
 			});
-			}else{
-				if(value.engine.match('https://www.bing')){
-					this.engine = new Bing();
-					this.engine.makeRequests(value,this).then((pr)=>{
-						resolve(pr);
-					});
-				}
-				else{
-					this.engine =new Duck();
-					this.engine.makeRequests(value,this).then((pr)=>{
-						resolve(pr);
-					});
-				}
-			}
-		});
+			});
 	}
 
 	setPeers(event){
