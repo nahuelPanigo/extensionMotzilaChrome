@@ -226,6 +226,7 @@ search;
 
 //desde el content llama al metodo para que busque los resultados de los peers
 	getResultsFromPeers(){
+		console.log("get results function")
 		try {
 			this.sendRequest({
 				'str': this.getEngine().getString(),
