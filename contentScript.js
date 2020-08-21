@@ -106,7 +106,7 @@ class ContentPageManager {
 
 	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
 	getArrays(array1y2,array,engine){
-		return this.solveRes.getResArray(array1y2,array,engine);
+		return this.solveRes.getResArrays(array1y2,array,engine);
 	}
 
 	//get a promise with the divs of the engine where the user search
@@ -345,14 +345,12 @@ pageManager.getResults(col).then(requ=>{  //get the results from the users searc
 				"args": {req: requ[1],	// search value
 						engine: requ[2]}  //engine
 		}).then( requests=>{
-					console.log("here break")
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
 					});
 		}).catch(()=>{
-			console.log(requests)
 			console.log('abc')});
 });
 
