@@ -71,7 +71,7 @@ class SolveResults{
 	}
 
 	googleUris(){
-		urls =new Array(5)
+		var urls = new Array(5)
 		var divs=document.querySelectorAll('div.r');
 		for (var i = 0 ; i< divs.length ; i++) {
 			urls[i]=(divs[i].getElementsByTagName('a')[0].href);//get only the urls GOOGLE
@@ -79,7 +79,7 @@ class SolveResults{
 		return urls;
 	}
 	bingUris(){
-		urls = new Array(5)
+		var urls = new Array(5)
 		var divs=document.querySelectorAll('div.b_attribution');
 		for (var i = 0 ; i< divs.length ; i++){
 			urls[i]=(divs[i].innerText);//get only the urls BING
@@ -87,7 +87,7 @@ class SolveResults{
 		return urls;
 	}
 	duckUris(){
-		urls = new Array(5)
+		var urls = new Array(5)
 		var divs=document.querySelectorAll("a.result__url");
 		for (var i = 0 ; i< divs.length ; i++){
 			urls[i]=(divs[i].innerText);//get only the urls BING
@@ -270,6 +270,7 @@ class ContentPageManager {
 			if(searchEngine.match('https://www.google')){
 					value=document.getElementsByClassName("gLFyf gsfi")[0].value;
 					ind1=1;ind2=2;
+					console.log(this.solveRes)
 					urls = this.solveRes.googleUris();
 			}else{
 				if(searchEngine.match('https://www.bing')){
