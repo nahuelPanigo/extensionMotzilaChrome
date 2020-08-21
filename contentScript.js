@@ -360,9 +360,7 @@ pageManager.getResults().then(requ=>{  //get the results from the users search
 				"args": {req: requ[1],	// search value
 						engine: requ[2]}  //engine
 		}).then( requests=>{
-					console.log("anda")
 					pageManager.allRequests(requests,imagesFiles[requ[3]],imagesFiles[requ[4]],requ[0],requ[2]);
-					console.log("aca tambien")
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
