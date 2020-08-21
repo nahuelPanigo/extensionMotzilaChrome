@@ -1,44 +1,20 @@
-class ContentPageManager {	
-	request;
-	equal;
-	engineUri;
-	prom;
-	find;
+class SolveResults{
 
-	//initialize arrays and set array prom with the pos of the first results
-	init(){
-		this.equal=new Array(5);
-		this.prom=new Array(15);
-		this.find=new Array(15);
-		for (var j=0;j<5;j++){
-			for (var i=0;i<3;i++){
-				this.prom[i+j*3]=j+1;
-				this.find[i+j*3]=1;	
+		prom;	//an array with the promedy of the peer results
+		cantFind;	//an array that count the times that a result is find
+
+		//initialize arrays and set array prom with the pos of the first results
+		init(){
+			this.prom=new Array(15);
+			this.cantFind=new Array(15);
+			for (var j=0;j<5;j++){
+				for (var i=0;i<3;i++){
+					this.prom[i+j*3]=j+1;
+					this.cantFind[i+j*3]=1;
+				}
 			}
 		}
-		for (var i=0;i<5;i++){
-			this.equal[i]=0;
-		}
-	}
-	
-	equalResult(j){
-		this.equal[j]++;
-	}
-
-	getUrl(id,array){
-		return array[id];
-	}
-
-	getEqualResults(j){
-		return this.equal[j];
-	}
-
-	setRequest(array){
-		this.request=array;
-	}
-
-	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
-	getArrays(array1y2,array,engine){
+		getResArrays(array1y2,array,engine){
 		var arrayg,arrayb,arrayd;
 		var res=new Array(15);
 		var j=0;
@@ -67,6 +43,72 @@ class ContentPageManager {
 		return res;
 	}
 
+	getProm(){
+		return this.prom;
+	}
+
+	getCantFind(){
+		return this.cantFind;
+	}
+
+	setProm(result,array){
+			for (var i = 0; i<15 ; i++) {
+				for (var j = 0; j<5 ; j++) {
+					if(result[j].match(array[i])){
+						this.prom[i]+=(j+1);
+						this.CantFind[i]++;
+						break;
+					}else{
+						if(j==4){
+							this.prom[i]+=6;
+
+						}
+					}
+				}	
+		}
+	}
+
+}
+
+
+
+class ContentPageManager {	
+	request;	//save the request from first search
+	equal;
+	engineUri;	//save the uri of the enfine
+	solveRes;	//class for parse the results 
+
+	//initialize array equal and create class for parse result
+	init(){
+		this.equal=new Array(5);
+		solveRes.init();
+		this.solveRes=new SolveResults();
+		for (var i=0;i<5;i++){
+			this.equal[i]=0;
+		}
+	}
+	
+	equalResult(j){
+		this.equal[j]++;
+	}
+
+	getUrl(id,array){
+		return array[id];
+	}
+
+	getEqualResults(j){
+		return this.equal[j];
+	}
+
+	setRequest(array){
+		this.request=array;
+	}
+
+	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
+	getArrays(array1y2,array,engine){
+		return this.solveRes.getResArray(array1y2,array,engine);
+	}
+
 	//get a promise with the divs of the engine where the user search
 	getDivs(engine){
 		return new Promise((resolve,reject)=>{
@@ -82,7 +124,7 @@ class ContentPageManager {
 		});
 	}
 
-	//compare 2 urls passed 
+	//compare 2 urls passed somes urls need to add a "/" at the end
 	equalUri(str1,str2){
 		if(str1.length>str2.length){
 					var string1=str1;
@@ -232,12 +274,11 @@ class ContentPageManager {
 
 	//send the results from peers to the popUp
 	sendMessageToPop(peer){
-		console.log(this.find);
 		browser.runtime.sendMessage({
 				data: "popUp",
 				"args": {peer: peer+1,
-						 prom:this.prom,
-						 find:this.find}
+						 prom: solveRes.getProm(),
+						 find: solveRes.getCantFind()}
 		}, function (response) {
                     console.log(response);
          });
@@ -246,21 +287,7 @@ class ContentPageManager {
 //charge results of the results from peer and call method to send message to the PopUp
 	callPopUpAndGiveResult(result,peer,array){
 		console.log(array);
-		for (var i = 0; i<15 ; i++) {
-				for (var j = 0; j<5 ; j++) {
-					if(result[j].match(array[i])){
-						this.prom[i]+=(j+1);
-						this.find[i]++;
-						break;
-					}else{
-						if(j==4){
-							this.prom[i]+=6;
-
-						}
-					}
-				}	
-		}
-		console.log(this.prom);
+		solveRes.setProm(result,array);
 		this.sendMessageToPop(peer);
 	}
 
@@ -310,7 +337,7 @@ let col=[filesG,filesB,filesD]
 var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
-var array;
+var resultGoogBingDuck; 
 pageManager.getResults(col).then(requ=>{  //get the results from the users search 
 		pageManager.setEngineUri(requ[2]); //set engine url 
 		browser.runtime.sendMessage({	//call background for results in the other 2 engines
@@ -319,7 +346,7 @@ pageManager.getResults(col).then(requ=>{  //get the results from the users searc
 						engine: requ[2]}  //engine
 		}).then( requests=>{
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
-					array = pageManager.getArrays(requests,requ[0],requ[2]);
+					resultGoogBingDuck = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
 					});
@@ -330,7 +357,7 @@ pageManager.getResults(col).then(requ=>{  //get the results from the users searc
 
 browser.runtime.onMessage.addListener((requests,sender)=>{
 	if(requests.call==="getUrl"){
-		window.location=pageManager.getUrl(requests.args.but,array);
+		window.location=pageManager.getUrl(requests.args.but,resultGoogBingDuck);
 	}
 	if(requests.call==="getProm"){
 		pageManager.sendMessageToPop(peer);
@@ -341,7 +368,7 @@ browser.runtime.onMessage.addListener( requests => {
 	if(requests.call==="peerRequests"){
 		peer++;
 		pageManager.peerRequests(requests.args.args,filesP,peer);
-		pageManager.callPopUpAndGiveResult(requests.args.args,peer,array);
+		pageManager.callPopUpAndGiveResult(requests.args.args,peer,resultGoogBingDuck);
 	}
 });
 
