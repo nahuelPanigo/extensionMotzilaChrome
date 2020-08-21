@@ -5,8 +5,8 @@ class SolveResults{
 
 		//initialize arrays and set array prom with the pos of the first results
 		init(){
-			this.prom=new Array(15);
-			this.cantFind=new Array(15);
+			this.prom = new Array(15);
+			this.cantFind = new Array(15);
 			for (var j=0;j<5;j++){
 				for (var i=0;i<3;i++){
 					this.prom[i+j*3]=j+1;
@@ -81,8 +81,8 @@ class ContentPageManager {
 	//initialize array equal and create class for parse result
 	init(){
 		this.equal=new Array(5);
-		solveRes.init();
 		this.solveRes=new SolveResults();
+		this.solveRes.init();
 		for (var i=0;i<5;i++){
 			this.equal[i]=0;
 		}
