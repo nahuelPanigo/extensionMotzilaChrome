@@ -1,13 +1,11 @@
 class Google{
 	makeRequests(value,back){
-		console.log("se ejecuta")
 		return new Promise((resolve,reject)=>{ 
 		var strBing="https://www.bing.com/search?q=";
 		var strDuck="https://duckduckgo.com/html/?q=";
 		var divsBing,divsDuck;
 		var divUrlBing = new Array(5);
 		var divUrlDuck = new Array(5);
-		console.log("anda")
 		back.doRequest(strBing).then(responseData=>{
 				divsBing=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
@@ -48,24 +46,24 @@ class Bing{
 		return new Promise((resolve,reject)=>{ 
 			var strGoogle="https://www.google.com/search?q=";
 			var strDuck="https://duckduckgo.com/html/?q="
-			var col1,col2;
+			var divsGoogle,divsDuck;
 			var divUrlGoogle= new Array(5);
 			var divUrlDuck= new Array(5);
 			back.doRequest(strGoogle).then(responseData=>{
-					col1=responseData.querySelectorAll('div.r');
+					divsGoogle=responseData.querySelectorAll('div.r');
 					for (var i = 0; i < 5 ; i++) {
-							divUrlGoogle[i]=col1[i].getElementsByTagName('a')[0].href;
+							divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
 					}	
-					if(col2 !== undefined){
+					if(divsDuck !== undefined){
 							resolve([divUrlGoogle,divUrlDuck])
 						}
 			});
 			back.doRequest(strDuck).then(responseData=>{
-					col2=responseData.getElementsByClassName('result__extras__url');
+					divsDuck=responseData.getElementsByClassName('result__extras__url');
 					for (var i = 0; i < 5 ; i++) {
-							divUrlDuck[i]=col2[i].getElementsByTagName('a')[0].href;
+							divUrlDuck[i]=divsDuck[i].getElementsByTagName('a')[0].href;
 					}					
-					if(col1!==undefined){
+					if(divsGoogle!==undefined){
 						resolve([divUrlGoogle,divUrlDuck])
 					}
 			});
@@ -95,17 +93,14 @@ class Duck{
 			var divsGoogle,divsBing;
 			var divUrlGoogle= new Array(5);
 			var divUrlBing= new Array(5);
-			//get from google from my navegator
+			//get  request from google from my navegator
 			back.doRequest(strGoogle).then(responseData=>{
-					divsGoogle=responseData.querySelectorAll('div.r');
-					for (var i = 0; i < 5 ; i++) {
-							divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
-					}	
+					back.parseGoogleDivs(divsGoogle,divUrlGoogle,responseData);	
 					if(divsBing !== undefined){
 							resolve([divUrlGoogle,divUrlBing])
 						}
 			});
-			//get from bing from my navegator
+			//get request from bing from my navegator
 			back.doRequest(strBing).then(responseData=>{
 				divsBing=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
@@ -139,6 +134,16 @@ class BackgroundExtension extends AbstractP2PExtensionBackground{
 peers =[];
 engine;
 search;
+
+	parseGoogleDivs(divsGoogle,divUrlGoogle,responseData){
+	divsGoogle=responseData.querySelectorAll('div.r');
+					for (var i = 0; i < 5 ; i++) {
+							divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
+					}
+	}
+
+
+
 	setEngine(eng){
 		this.engine=eng;
 	}
@@ -201,8 +206,6 @@ search;
 				this.engine =new Duck();
 			}
 		}
-		console.log(" no se rompe en make engine")
-		console.log(this.engine)
 		return this.engine
 	}
 
@@ -260,14 +263,10 @@ search;
 
 //first method callesd by contetn create engine and call method make request to get the results
 	searchNewRequest(value){
-			console.log("se ejecuta el metodo")
 			return new Promise((resolve,reject)=>{
 			this.setSearch(value.req);
 			this.makeEngine(value.engine)
-			console.log("aca llega")
-			console.log(this.engine)
 			this.engine.makeRequests(value,this).then((pr)=>{
-				console.log("llega a hacer el makeRequests")
 						resolve(pr);
 			});
 			});
