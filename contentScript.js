@@ -345,12 +345,15 @@ pageManager.getResults(col).then(requ=>{  //get the results from the users searc
 				"args": {req: requ[1],	// search value
 						engine: requ[2]}  //engine
 		}).then( requests=>{
+					console.log("here break")
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
 					});
-		}).catch(()=>{console.log('abc')});
+		}).catch(()=>{
+			console.log(requests)
+			console.log('abc')});
 });
 
 
