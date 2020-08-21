@@ -231,7 +231,7 @@ class ContentPageManager {
 					var imgDe=this.createAndMove("De",files[11],"15px","60px","5px","relative");
 					for(var j=0; j<5 ;j++){//iterate in results and check match
 						console.log(this.request[j].match(peerReq[i]))
-						if(this.request[j].match(peerReq[i])){
+						if(this.equalUri(this.request[j],peerReq[i])){
 								this.equalResult(i);
 								break;
 							}
