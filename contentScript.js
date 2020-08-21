@@ -68,6 +68,32 @@ class SolveResults{
 		}
 	}
 
+	googleUris(){
+		urls =Array new (5)
+		var divs=document.querySelectorAll('div.r');
+		for (var i = 0 ; i< divs.length ; i++) {
+			urls[i]=(divs[i].getElementsByTagName('a')[0].href);//get only the urls GOOGLE
+		}
+		return urls;
+	}
+
+	bingUris(){
+		urls =Array new (5)
+		var divs=document.querySelectorAll('div.b_attribution');
+		for (var i = 0 ; i< divs.length ; i++){
+			urls[i]=(divs[i].innerText);//get only the urls BING
+		}
+		return urls;
+	}
+
+	duckUris(){
+		urls =Array new (5)
+		var divs=document.querySelectorAll("a.result__url");
+		for (var i = 0 ; i< divs.length ; i++){
+			urls[i]=(divs[i].innerText);//get only the urls BING
+		}
+		return urls;
+	}
 }
 
 
@@ -240,33 +266,24 @@ class ContentPageManager {
 			var searchEngine=document.URL;
 			var value="";
 			var ind1,ind2;//index to know wich img put
-			var array=new Array(5);
+			var urls;
 			if(searchEngine.match('https://www.google')){
 					value=document.getElementsByClassName("gLFyf gsfi")[0].value;
 					ind1=1;ind2=2;
-					var Res=document.querySelectorAll('div.r');
-					for (var i = 0 ; i< Res.length ; i++) {
-						array[i]=(Res[i].getElementsByTagName('a')[0].href);//get only the urls GOOGLE
-					}
+					urls = this.solveRes.googleUris();
 					resolve([array,value,searchEngine,ind1,ind2]); //urls, what user searhc,engine, index for img
 			}else{
 				if(searchEngine.match('https://www.bing')){
 					ind1=0;ind2=2;
 					value=document.getElementById('sb_form_q').value
-					var Res=document.querySelectorAll('div.b_attribution');
-					for (var i = 0 ; i< Res.length ; i++){
-							array[i]=(Res[i].innerText);//get only the urls BING
-					}
+					urls = this.solveRes.bingUris();
 					resolve([array,value,searchEngine,ind1,ind2]);//urls, what user searhc,engine, index for img
 				}
 				else{
 					ind1=0;ind2=1;
-    				var Res=document.querySelectorAll("a.result__url");
-					value=document.getElementById('search_form_input').value	
-					for (var i = 0 ; i< 5 ; i++) {
-							array[i]=(Res[i].href);//get only the urls DUCK
-					}
-					resolve([array,value,searchEngine,ind1,ind2])//urls, what user searhc,engine, index for img
+    				value=document.getElementById('search_form_input').value
+					urls = this.solveRes.duckUris();
+					resolve([urls,value,searchEngine,ind1,ind2])//urls, what user searhc,engine, index for img
 				}
 			}
 		});
