@@ -95,7 +95,8 @@ class Duck{
 			var divUrlBing= new Array(5);
 			//get  request from google from my navegator
 			back.doRequest(strGoogle).then(responseData=>{
-					back.parseGoogleDivs(divsGoogle,divUrlGoogle,responseData);	
+					divsGoogle = responseData.querySelectorAll('div.r');
+					divUrlGoogle = back.parseGoogleDivs(divsGoogle,divUrlGoogle);	
 					if(divsBing !== undefined){
 							resolve([divUrlGoogle,divUrlBing])
 						}
@@ -135,11 +136,11 @@ peers =[];
 engine;
 search;
 
-	parseGoogleDivs(divsGoogle,divUrlGoogle,responseData){
-	divsGoogle=responseData.querySelectorAll('div.r');
+	parseGoogleDivs(divsGoogle,divUrlGoogle){
 					for (var i = 0; i < 5 ; i++) {
 							divUrlGoogle[i]=divsGoogle[i].getElementsByTagName('a')[0].href;
 					}
+					return divUrlGoogle
 	}
 
 
