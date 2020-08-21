@@ -1,11 +1,13 @@
 class Google{
 	makeRequests(value,back){
+		console.log("se ejecuta")
 		return new Promise((resolve,reject)=>{ 
 		var strBing="https://www.bing.com/search?q=";
 		var strDuck="https://duckduckgo.com/html/?q=";
 		var divsBing,divsDuck;
 		var divUrlBing = new Array(5);
 		var divUrlDuck = new Array(5);
+		console.log("anda")
 		back.doRequest(strBing).then(responseData=>{
 				divsBing=responseData.querySelectorAll('div.b_attribution');
 				for (var i = 0; i < 5 ; i++) {
@@ -190,7 +192,8 @@ search;
 
 	makeEngine(engine){
 		if(engine.match('https://www.google')){
-			 this.engin = new Google();
+
+			 this.engine = new Google();
 		}else{
 			if(engine.match('https://www.bing')){
 				this.engine = new Bing();
@@ -199,6 +202,7 @@ search;
 			}
 		}
 		console.log(" no se rompe en make engine")
+		console.log(this.engine)
 		return this.engine
 	}
 
@@ -261,7 +265,9 @@ search;
 			this.setSearch(value.req);
 			this.makeEngine(value.engine)
 			console.log("aca llega")
+			console.log(this.engine)
 			this.engine.makeRequests(value,this).then((pr)=>{
+				console.log("llega a hacer el makeRequests")
 						resolve(pr);
 			});
 			});
