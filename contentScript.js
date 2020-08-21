@@ -229,12 +229,14 @@ class ContentPageManager {
 				for (var i = 0; i < 5; i++) {//iterate in te first 5 divs for paste image
 					var imgCirculo=this.createImage("circulo",files[10],"50px");
 					var imgDe=this.createAndMove("De",files[11],"15px","60px","5px","relative");
+					if(this.equalUri(this.request[j],peerReq[i])){
+						console.log("andaaaa")
+					}
 					for(var j=0; j<5 ;j++){//iterate in results and check match
-						console.log(this.request[j].match(peerReq[i]))
 						if(this.equalUri(this.request[j],peerReq[i])){
-								this.equalResult(i);
-								break;
-							}
+							this.equalResult(i);
+							j=5;
+						}
 					}
 					var imgNum2=this.createAndMove("num2",files[peer],"10px","45px","25px","relative");
 					var imgNum1=this.createAndMove("num1",files[this.getEqualResults(i)],"10px","20px","5px","relative");
