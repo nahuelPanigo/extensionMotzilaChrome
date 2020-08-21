@@ -363,6 +363,7 @@ pageManager.getResults(col).then(requ=>{  //get the results from the users searc
 						engine: requ[2]}  //engine
 		}).then( requests=>{
 					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
+					console.log("nahuel")
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
@@ -371,7 +372,7 @@ pageManager.getResults(col).then(requ=>{  //get the results from the users searc
 			console.log('abc')});
 });
 
-
+console.log("afuera del page manager")
 
 browser.runtime.onMessage.addListener((requests,sender)=>{
 	if(requests.call==="getUrl"){
@@ -383,8 +384,10 @@ browser.runtime.onMessage.addListener((requests,sender)=>{
 });
 
 browser.runtime.onMessage.addListener( requests => {
+	console.log("aca anda")
 	if(requests.call==="peerRequests"){
 		peer++;
+		console.log("aca anda")
 		pageManager.peerRequests(requests.args.args,filesP,peer);
 		pageManager.callPopUpAndGiveResult(requests.args.args,peer,resultGoogBingDuck);
 	}
