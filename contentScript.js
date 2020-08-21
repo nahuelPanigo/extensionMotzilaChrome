@@ -303,7 +303,9 @@ class ContentPageManager {
 //charge results of the results from peer and call method to send message to the PopUp
 	callPopUpAndGiveResult(result,peer,array){
 		console.log(array);
-		solveRes.setProm(result,array);
+		this.solveRes.setProm(result,array);
+		console.log(this.solveRes.getProm());
+		console.log(this.solveRes.getCantFind());
 		this.sendMessageToPop(peer);
 	}
 
