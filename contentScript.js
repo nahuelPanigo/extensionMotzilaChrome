@@ -110,6 +110,8 @@ class SolveResults{
 
 
 
+
+
 class ContentPageManager {	
 	request;	//save the request from first search
 	engineUri;	//save the uri of the enfine
@@ -309,7 +311,6 @@ class ContentPageManager {
 }
 
 
-
 let filesG=[
 "logos/google1.png",
 "logos/google2.png",
@@ -386,10 +387,3 @@ browser.runtime.onMessage.addListener( requests => {
 		pageManager.callPopUpAndGiveResult(requests.args.args,peer,resultGoogBingDuck);
 	}
 });
-
-
-
-
-
-
-
