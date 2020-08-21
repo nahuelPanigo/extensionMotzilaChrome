@@ -293,8 +293,8 @@ class ContentPageManager {
 		browser.runtime.sendMessage({
 				data: "popUp",
 				"args": {peer: peer+1,
-						 prom: solveRes.getProm(),
-						 find: solveRes.getCantFind()}
+						 prom: this.solveRes.getProm(),
+						 find: this.solveRes.getCantFind()}
 		}, function (response) {
                     console.log(response);
          });
