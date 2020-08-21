@@ -140,7 +140,7 @@ search;
 				return divUrlBing
 	}
 
-	parseBingDivs(divsBing,divUrlBing){
+	parseDuckDivs(divsDuck,divUrlDuck){
 				for (var i = 0; i < 5 ; i++) {
 						divUrlDuck[i]=divsDuck[i].getElementsByTagName('a')[0].href;
 				}
