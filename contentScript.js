@@ -2,12 +2,16 @@ class SolveResults{
 
 		prom;	//an array with the promedy of the peer results
 		cantFind;	//an array that count the times that a result is find
+		cantEqual;	//an array that count the results that match peers with first 5 result
+
 
 		//initialize arrays and set array prom with the pos of the first results
 		init(){
+			this.cantEqual=new Array(5);
 			this.prom = new Array(15);
 			this.cantFind = new Array(15);
 			for (var j=0;j<5;j++){
+				this.cantEqual[j]=0;
 				for (var i=0;i<3;i++){
 					this.prom[i+j*3]=j+1;
 					this.cantFind[i+j*3]=1;
@@ -15,32 +19,41 @@ class SolveResults{
 			}
 		}
 
+		equalResult(j){
+		this.cantEqual[j]++;
+		}
 
-		getResArrays(array1y2,array,engine){
-		var arrayg,arrayb,arrayd;
+
+		getEqualResults(j){
+		return this.cantEqual[j];
+		}
+
+
+		getResArrays(urls2Engines,array,engine){
+		var googleUrls,bingUrls,duckUrls;
 		var res=new Array(15);
 		var j=0;
 		if(engine.match("https://www.google")){
-			arrayg=array;
-			arrayb=array1y2[0];
-			arrayd=array1y2[1];
+			googleUrls=array;
+			bingUrls=urls2Engines[0];
+			duckUrls=urls2Engines[1];
 		}else{
 				if(engine.match("https://www.bing")){
-						arrayg=array1y2[0];
-						arrayb=array;
-						arrayd=array1y2[1];
+						googleUrls=urls2Engines[0];
+						bingUrls=array;
+						duckUrls=urls2Engines[1];
 				}else{
-						arrayg=array1y2[0];
-						arrayb=array1y2[1];
-						arrayd=array;
+						googleUrls=urls2Engines[0];
+						bingUrls=urls2Engines[1];
+						duckUrls=array;
 				}
 		}
 		for (var i =0; i <5 ; i++) {
-			res[i+j]=arrayg[i];
+			res[i+j]=googleUrls[i];
 			j++;
-			res[i+j]=arrayb[i];
+			res[i+j]=bingUrls[i];
 			j++;
-			res[i+j]=arrayd[i];
+			res[i+j]=duckUrls[i];
 		}
 		return res;
 	}
@@ -99,39 +112,26 @@ class SolveResults{
 
 class ContentPageManager {	
 	request;	//save the request from first search
-	equal;
 	engineUri;	//save the uri of the enfine
 	solveRes;	//class for parse the results 
 
-	//initialize array equal and create class for parse result
+	//create class for parse result
 	init(){
-		this.equal=new Array(5);
 		this.solveRes=new SolveResults();
 		this.solveRes.init();
-		for (var i=0;i<5;i++){
-			this.equal[i]=0;
-		}
 	}
 	
-	equalResult(j){
-		this.equal[j]++;
+	getUrl(id,urls){
+		return urls[id];
 	}
 
-	getUrl(id,array){
-		return array[id];
-	}
-
-	getEqualResults(j){
-		return this.equal[j];
-	}
-
-	setRequest(array){
-		this.request=array;
+	setRequest(requests){
+		this.request=requests;
 	}
 
 	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
-	getArrays(array1y2,array,engine){
-		return this.solveRes.getResArrays(array1y2,array,engine);
+	getArrays(resultsUrlsEngines,urls,engine){
+		return this.solveRes.getResArrays(resultsUrlsEngines,urls,engine);
 	}
 
 	//get a promise with the divs of the engine where the user search
@@ -150,21 +150,21 @@ class ContentPageManager {
 	}
 
 	//compare 2 urls passed somes urls need to add a "/" at the end
-	equalUri(str1,str2){
-		if(str1.length>str2.length){
-					var string1=str1;
-					var string2=str2.concat('/');
+	equalUri(url1,url2){
+		if(url1.length>url2.length){
+					var urlTemp1=url1;
+					var urlTemp2=url2.concat('/');
 		}else{
-				if(str2.length>str1.length){ 
-								var string1=str1.concat('/'); 
-								var string2=str2;
+				if(url2.length>url1.length){ 
+								var urlTemp1=url1.concat('/'); 
+								var urlTemp2=url2;
 							}
 							else{
-								var string1=str1;
-								var string2=str2;
+								var urlTemp1=url1;
+								var urlTemp2=url2;
 							}
 		}
-		return string1.match(string2)
+		return urlTemp1===urlTemp2
 	}
 
 	//create an image with a name,file path and pixels given 
@@ -178,15 +178,15 @@ class ContentPageManager {
 	}	
 
 	//create and image to add to the div
-	iterateAndAddImages(actUrl,reqUrl,array,id){
+	iterateAndAddImages(actUrl,reqUrl,imagesFiles,id){
 		var img
 		for (var j = 0; j < 5; j++) {
 				if(this.equalUri(actUrl,reqUrl[j])){
-					img=this.createImage(id,array[j],"45px");
+					img=this.createImage(id,imagesFiles[j],"45px");
 					break;
 				}else{
 					if(j===4){
-						img=this.createImage(id,array[5],"45px");
+						img=this.createImage(id,imagesFiles[5],"45px");
 					}
 				}
 		}
@@ -195,13 +195,13 @@ class ContentPageManager {
 
 
 	//itearate for the first 5 divs creating 2 images of the others search engine for each div
-	allRequests(requests,array1,array2,array,engine){
-		this.setRequest(array);
+	allRequests(requestsUrls,imagesFiles1,imagesFiles2,urls,engine){
+		this.setRequest(urls);
 		this.getDivs(engine).then(value =>{
 				for (var i = 0; i < 5; i++) {
 					var img,img2;
-					img = this.iterateAndAddImages(array[i],requests[0],array1,"img1")	
-					img2= this.iterateAndAddImages(array[i],requests[1],array2,"img2")
+					img = this.iterateAndAddImages(urls[i],requestsUrls[0],imagesFiles1,"img1")	
+					img2= this.iterateAndAddImages(urls[i],requestsUrls[1],imagesFiles2,"img2")
 				value[i].appendChild(img);
 				value[i].appendChild(img2);
 		}
@@ -221,25 +221,21 @@ class ContentPageManager {
 		this.moveImage(img,left,top,pos);
 		return img;
 	}
-//put de result of the peer in dom
+	
+	//put de result of the peer in dom
 	peerRequests(peerReq,files,peer){
-		console.log(this.requests)
-		console.log(peerReq)
 		this.getDivs(this.engineUri).then(value =>{
 				for (var i = 0; i < 5; i++) {//iterate in te first 5 divs for paste image
 					var imgCirculo=this.createImage("circulo",files[10],"50px");
 					var imgDe=this.createAndMove("De",files[11],"15px","60px","5px","relative");
-					if(this.equalUri(this.request[j],peerReq[i])){
-						console.log("andaaaa")
-					}
 					for(var j=0; j<5 ;j++){//iterate in results and check match
 						if(this.equalUri(this.request[j],peerReq[i])){
-							this.equalResult(i);
+							this.solveRes.equalResult(i);
 							j=5;
 						}
 					}
 					var imgNum2=this.createAndMove("num2",files[peer],"10px","45px","25px","relative");
-					var imgNum1=this.createAndMove("num1",files[this.getEqualResults(i)],"10px","20px","5px","relative");
+					var imgNum1=this.createAndMove("num1",files[this.solveRes.getEqualResults(i)],"10px","20px","5px","relative");
 					if(peer!=1){//remove older img peer
 						this.removeImg(value[i]);
 					}//put the new images in div
@@ -251,6 +247,7 @@ class ContentPageManager {
 		});
 	}
 	
+
 	//get a div and delete circle, de, num1 and num2 img
 	removeImg(div){
 		var childs= div.getElementsByTagName("img");
@@ -305,8 +302,6 @@ class ContentPageManager {
 
 //charge results of the results from peer and call method to send message to the PopUp
 	callPopUpAndGiveResult(result,peer,array){
-		console.log(result)
-		console.log(array)
 		this.solveRes.setProm(result,array);
 		this.sendMessageToPop(peer);
 	}
@@ -353,19 +348,21 @@ let filesP=[
 "logos/circulo.png",
 "logos/De.png"
 ]
-let col=[filesG,filesB,filesD]
+let imagesFiles=[filesG,filesB,filesD]
 var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
 var resultGoogBingDuck; 
-pageManager.getResults(col).then(requ=>{  //get the results from the users search 
+pageManager.getResults().then(requ=>{  //get the results from the users search 
 		pageManager.setEngineUri(requ[2]); //set engine url 
 		browser.runtime.sendMessage({	//call background for results in the other 2 engines
 				"call": "searchNewRequest",
 				"args": {req: requ[1],	// search value
 						engine: requ[2]}  //engine
 		}).then( requests=>{
-					pageManager.allRequests(requests,col[requ[3]],col[requ[4]],requ[0],requ[2]);
+					console.log("anda")
+					pageManager.allRequests(requests,imagesFiles[requ[3]],imagesFiles[requ[4]],requ[0],requ[2]);
+					console.log("aca tambien")
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0],requ[2]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
