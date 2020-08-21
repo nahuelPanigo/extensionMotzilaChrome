@@ -223,11 +223,14 @@ class ContentPageManager {
 	}
 //put de result of the peer in dom
 	peerRequests(peerReq,files,peer){
+		console.log(this.requests)
+		console.log(peerReq)
 		this.getDivs(this.engineUri).then(value =>{
 				for (var i = 0; i < 5; i++) {//iterate in te first 5 divs for paste image
 					var imgCirculo=this.createImage("circulo",files[10],"50px");
 					var imgDe=this.createAndMove("De",files[11],"15px","60px","5px","relative");
 					for(var j=0; j<5 ;j++){//iterate in results and check match
+						console.log(this.request[j].match(peerReq[i]))
 						if(this.request[j].match(peerReq[i])){
 								this.equalResult(i);
 								break;
