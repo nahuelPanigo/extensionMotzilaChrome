@@ -27,7 +27,6 @@ class Bing{
 				var googleUrls=urlsEngines0;
 				var bingUrls=myUrls;
 				var duckUrls=urlsEngines1;
-				console.log("anda el result resultsOrdered")
 				return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
 		}
 
@@ -51,9 +50,9 @@ class Duck{
 
 
 	resultsOrdered(myUrls,urlsEngines0,urlsEngines1,parser){
-		var googleUrls=urls2Engines[0];
-		var bingUrls=urls2Engines[1];
-		var duckUrls=array;
+		var googleUrls=urlsEngines0;
+		var bingUrls=urlsEngines1;
+		var duckUrls=myUrls;
 		return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
 	}
 
@@ -103,7 +102,6 @@ class SolveResults{
 
 
 		getResArrays(urls2Engines,urls,engine){
-			console.log("llego al solveRes")
 		return engine.resultsOrdered(urls,urls2Engines[0],urls2Engines[1],this);
 	}
 
@@ -153,14 +151,11 @@ class SolveResults{
 		return urls;
 	}
 	bingUris(){
-		console.log("aca entra")
 		var urls = new Array(5)
 		var divs=document.querySelectorAll('div.b_attribution');
-		console.log(divs)
 		for (var i = 0 ; i< divs.length ; i++){
 			urls[i]=(divs[i].innerText);//get only the urls BING
 		}
-		console.log(urls)
 		return urls;
 	}
 	duckUris(){
@@ -198,7 +193,6 @@ class ContentPageManager {
 
 	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
 	getArrays(resultsUrlsEngines,urls){
-		console.log("hasta aca anda")
 		return this.solveRes.getResArrays(resultsUrlsEngines,urls,this.engine);
 	}
 
@@ -315,7 +309,6 @@ class ContentPageManager {
 		return  new Promise((resolve,reject)=>{
 			var searchEngine=document.URL;
 			var urlsValInd
-			console.log("anda el get results");
 			if(searchEngine.match('https://www.google')){
 					this.engine = new Google();
 			}else{
@@ -403,7 +396,6 @@ pageManager.getResults().then(requ=>{  //get the results from the users search
 		}).then( requests=>{
 					pageManager.allRequests(requests,imagesFiles[requ[3]],imagesFiles[requ[4]],requ[0]);
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0]);
-					console.log("paso el pageManager")
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
 					});
