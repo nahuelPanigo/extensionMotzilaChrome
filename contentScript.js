@@ -319,10 +319,9 @@ class ContentPageManager {
 				}
 			}
 			urlsValInd =this.engine.getUrls()
-			resolve([urlsValInd[3],[urlsValInd[0],searchEngine,[urlsValInd[1],[urlsValInd[2]]);//urls, what user searhc,engine, index for img
+			resolve([urlsValInd[3],urlsValInd[0],searchEngine,urlsValInd[1],urlsValInd[2]]);//urls, what user searhc,engine, index for img
 		});
 	}
-
 	//send the results from peers to the popUp
 	sendMessageToPop(peer){
 		browser.runtime.sendMessage({
@@ -383,6 +382,7 @@ let filesP=[
 "logos/De.png"
 ]
 let imagesFiles=[filesG,filesB,filesD]
+console.log("holaaa")
 var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
