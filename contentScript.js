@@ -1,9 +1,9 @@
 class Google{
 
 	resultsOrdered(myUrls,urlsEngines0,urlsEngines1,parser){
-		googleUrls=myUrls;
-		bingUrls=urlsEngines0;
-		duckUrls=urlsEngines1;		
+		var googleUrls=myUrls;
+		var bingUrls=urlsEngines0;
+		var duckUrls=urlsEngines1;		
 		return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
 	}
 
@@ -24,9 +24,10 @@ class Google{
 class Bing{
 
 		resultsOrdered(myUrls,urlsEngines0,urlsEngines1,parser){
-				googleUrls=urlsEngines0;
-				bingUrls=myUrls;
-				duckUrls=urlsEngines1;
+				var googleUrls=urlsEngines0;
+				var bingUrls=myUrls;
+				var duckUrls=urlsEngines1;
+				console.log("anda el result resultsOrdered")
 				return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
 		}
 
@@ -50,9 +51,9 @@ class Duck{
 
 
 	resultsOrdered(myUrls,urlsEngines0,urlsEngines1,parser){
-		googleUrls=urls2Engines[0];
-		bingUrls=urls2Engines[1];
-		duckUrls=array;
+		var googleUrls=urls2Engines[0];
+		var bingUrls=urls2Engines[1];
+		var duckUrls=array;
 		return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
 	}
 
@@ -102,11 +103,13 @@ class SolveResults{
 
 
 		getResArrays(urls2Engines,urls,engine){
+			console.log("llego al solveRes")
 		return engine.resultsOrdered(urls,urls2Engines[0],urls2Engines[1],this);
 	}
 
 	parseEnginesResults(googleUrls,duckUrls,bingUrls){
 		var res=new Array(15);
+		 var j=0
 		for (var i =0; i <5 ; i++) {
 				res[i+j]=googleUrls[i];
 				j++;
@@ -195,6 +198,7 @@ class ContentPageManager {
 
 	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
 	getArrays(resultsUrlsEngines,urls){
+		console.log("hasta aca anda")
 		return this.solveRes.getResArrays(resultsUrlsEngines,urls,this.engine);
 	}
 
@@ -322,10 +326,8 @@ class ContentPageManager {
 					this.engine = new Duck()
 				}
 			}
-			console.log("aca tambien")
 			console.log(this.engine)
 			urlsValInd =this.engine.getUrls(this.solveRes)
-			console.log("aca se rompe")
 			resolve([urlsValInd[3],urlsValInd[0],searchEngine,urlsValInd[1],urlsValInd[2]]);//urls, what user searhc,engine, index for img
 		});
 	}
@@ -393,17 +395,15 @@ var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
 var resultGoogBingDuck; 
-console.log("nahuel")
 pageManager.getResults().then(requ=>{  //get the results from the users search  
 		browser.runtime.sendMessage({	//call background for results in the other 2 engines
 				"call": "searchNewRequest",
 				"args": {req: requ[1],	// search value
 						engine: requ[2]}  //engine
 		}).then( requests=>{
-					console.log("anda");
 					pageManager.allRequests(requests,imagesFiles[requ[3]],imagesFiles[requ[4]],requ[0]);
-					console.log("aca se rompe")
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0]);
+					console.log("paso el pageManager")
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
 					});
