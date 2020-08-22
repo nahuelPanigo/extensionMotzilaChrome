@@ -13,9 +13,9 @@ class Google{
 		});
 	}
 
-	getUrls(){
-		value=document.getElementsByClassName("gLFyf gsfi")[0].value;
-		urls = this.solveRes.googleUris();
+	getUrls(solveRes){
+		var value=document.getElementsByClassName("gLFyf gsfi")[0].value;
+		var urls = solveRes.googleUris();
 		return [value,1,2,urls]
 	}
 
@@ -37,9 +37,9 @@ class Bing{
 		});
 		}
 
-		getUrls(){
-			value=document.getElementById('sb_form_q').value
-			urls = this.solveRes.bingUris();
+		getUrls(solveRes){
+			var value = document.getElementById('sb_form_q').value
+			var urls = solveRes.bingUris();
 			return [value,0,2,urls];
 		}
 
@@ -63,9 +63,9 @@ class Duck{
 	});
 	}
 
-	getUrls(){
-    	value=document.getElementById('search_form_input').value
-		urls = this.solveRes.duckUris();
+	getUrls(solveRes){
+    	var value = document.getElementById('search_form_input').value
+		var urls = solveRes.duckUris();
 		return [value,0,1,urls];
 	}
 }
@@ -150,11 +150,14 @@ class SolveResults{
 		return urls;
 	}
 	bingUris(){
+		console.log("aca entra")
 		var urls = new Array(5)
 		var divs=document.querySelectorAll('div.b_attribution');
+		console.log(divs)
 		for (var i = 0 ; i< divs.length ; i++){
 			urls[i]=(divs[i].innerText);//get only the urls BING
 		}
+		console.log(urls)
 		return urls;
 	}
 	duckUris(){
@@ -308,6 +311,7 @@ class ContentPageManager {
 		return  new Promise((resolve,reject)=>{
 			var searchEngine=document.URL;
 			var urlsValInd
+			console.log("anda el get results");
 			if(searchEngine.match('https://www.google')){
 					this.engine = new Google();
 			}else{
@@ -318,7 +322,10 @@ class ContentPageManager {
 					this.engine = new Duck()
 				}
 			}
-			urlsValInd =this.engine.getUrls()
+			console.log("aca tambien")
+			console.log(this.engine)
+			urlsValInd =this.engine.getUrls(this.solveRes)
+			console.log("aca se rompe")
 			resolve([urlsValInd[3],urlsValInd[0],searchEngine,urlsValInd[1],urlsValInd[2]]);//urls, what user searhc,engine, index for img
 		});
 	}
@@ -382,18 +389,20 @@ let filesP=[
 "logos/De.png"
 ]
 let imagesFiles=[filesG,filesB,filesD]
-console.log("holaaa")
 var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
 var resultGoogBingDuck; 
+console.log("nahuel")
 pageManager.getResults().then(requ=>{  //get the results from the users search  
 		browser.runtime.sendMessage({	//call background for results in the other 2 engines
 				"call": "searchNewRequest",
 				"args": {req: requ[1],	// search value
 						engine: requ[2]}  //engine
 		}).then( requests=>{
+					console.log("anda");
 					pageManager.allRequests(requests,imagesFiles[requ[3]],imagesFiles[requ[4]],requ[0]);
+					console.log("aca se rompe")
 					resultGoogBingDuck = pageManager.getArrays(requests,requ[0]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
