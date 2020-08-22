@@ -1,3 +1,75 @@
+class Google{
+
+	resultsOrdered(myUrls,urlsEngines0,urlsEngines1,parser){
+		googleUrls=myUrls;
+		bingUrls=urlsEngines0;
+		duckUrls=urlsEngines1;		
+		return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
+	}
+
+	getDivs(){
+		return new Promise((resolve,reject)=>{
+			resolve(document.querySelectorAll('div.r'));
+		});
+	}
+
+	getUrls(){
+		value=document.getElementsByClassName("gLFyf gsfi")[0].value;
+		urls = this.solveRes.googleUris();
+		return [value,1,2,urls]
+	}
+
+}
+
+class Bing{
+
+		resultsOrdered(myUrls,urlsEngines0,urlsEngines1,parser){
+				googleUrls=urlsEngines0;
+				bingUrls=myUrls;
+				duckUrls=urlsEngines1;
+				return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
+		}
+
+
+		getDivs(){
+		return new Promise((resolve,reject)=>{
+					resolve(document.querySelectorAll('div.b_attribution'));
+		});
+		}
+
+		getUrls(){
+			value=document.getElementById('sb_form_q').value
+			urls = this.solveRes.bingUris();
+			return [value,0,2,urls];
+		}
+
+}
+
+
+class Duck{
+
+
+	resultsOrdered(myUrls,urlsEngines0,urlsEngines1,parser){
+		googleUrls=urls2Engines[0];
+		bingUrls=urls2Engines[1];
+		duckUrls=array;
+		return parser.parseEnginesResults(googleUrls,duckUrls,bingUrls)
+	}
+
+
+	getDivs(){
+	return new Promise((resolve,reject)=>{
+		resolve(document.getElementsByClassName("result__a"));
+	});
+	}
+
+	getUrls(){
+    	value=document.getElementById('search_form_input').value
+		urls = this.solveRes.duckUris();
+		return [value,0,1,urls];
+	}
+}
+
 class SolveResults{
 
 		prom;	//an array with the promedy of the peer results
@@ -29,32 +101,19 @@ class SolveResults{
 		}
 
 
-		getResArrays(urls2Engines,array,engine){
-		var googleUrls,bingUrls,duckUrls;
+		getResArrays(urls2Engines,urls,engine){
+		return engine.resultsOrdered(urls,urls2Engines[0],urls2Engines[1],this);
+	}
+
+	parseEnginesResults(googleUrls,duckUrls,bingUrls){
 		var res=new Array(15);
-		var j=0;
-		if(engine.match("https://www.google")){
-			googleUrls=array;
-			bingUrls=urls2Engines[0];
-			duckUrls=urls2Engines[1];
-		}else{
-				if(engine.match("https://www.bing")){
-						googleUrls=urls2Engines[0];
-						bingUrls=array;
-						duckUrls=urls2Engines[1];
-				}else{
-						googleUrls=urls2Engines[0];
-						bingUrls=urls2Engines[1];
-						duckUrls=array;
-				}
-		}
 		for (var i =0; i <5 ; i++) {
-			res[i+j]=googleUrls[i];
-			j++;
-			res[i+j]=bingUrls[i];
-			j++;
-			res[i+j]=duckUrls[i];
-		}
+				res[i+j]=googleUrls[i];
+				j++;
+				res[i+j]=bingUrls[i];
+				j++;
+				res[i+j]=duckUrls[i];
+			}
 		return res;
 	}
 
@@ -114,7 +173,7 @@ class SolveResults{
 
 class ContentPageManager {	
 	request;	//save the request from first search
-	engineUri;	//save the uri of the enfine
+	engine;		//engine class strategy
 	solveRes;	//class for parse the results 
 
 	//create class for parse result
@@ -132,23 +191,8 @@ class ContentPageManager {
 	}
 
 	//return an array with form [1google 1bing 1duck... 5google 5bing 5duck](len 15)
-	getArrays(resultsUrlsEngines,urls,engine){
-		return this.solveRes.getResArrays(resultsUrlsEngines,urls,engine);
-	}
-
-	//get a promise with the divs of the engine where the user search
-	getDivs(engine){
-		return new Promise((resolve,reject)=>{
-			if(engine.match("https://www.google")){
-				 resolve(document.querySelectorAll('div.r'));
-			}else{
-				if(engine.match('https://www.bing')){
-					resolve(document.querySelectorAll('div.b_attribution'));
-				}else{
-					resolve(document.getElementsByClassName("result__a"));
-				}
-			}
-		});
+	getArrays(resultsUrlsEngines,urls){
+		return this.solveRes.getResArrays(resultsUrlsEngines,urls,this.engine);
 	}
 
 	//compare 2 urls passed somes urls need to add a "/" at the end
@@ -197,9 +241,9 @@ class ContentPageManager {
 
 
 	//itearate for the first 5 divs creating 2 images of the others search engine for each div
-	allRequests(requestsUrls,imagesFiles1,imagesFiles2,urls,engine){
+	allRequests(requestsUrls,imagesFiles1,imagesFiles2,urls){
 		this.setRequest(urls);
-		this.getDivs(engine).then(value =>{
+		this.engine.getDivs().then(value =>{
 				for (var i = 0; i < 5; i++) {
 					var img,img2;
 					img = this.iterateAndAddImages(urls[i],requestsUrls[0],imagesFiles1,"img1")	
@@ -226,7 +270,7 @@ class ContentPageManager {
 	
 	//put de result of the peer in dom
 	peerRequests(peerReq,files,peer){
-		this.getDivs(this.engineUri).then(value =>{
+		this.engine.getDivs().then(value =>{
 				for (var i = 0; i < 5; i++) {//iterate in te first 5 divs for paste image
 					var imgCirculo=this.createImage("circulo",files[10],"50px");
 					var imgDe=this.createAndMove("De",files[11],"15px","60px","5px","relative");
@@ -259,34 +303,23 @@ class ContentPageManager {
 		div.removeChild(childs.De);
 	}
 
-	setEngineUri(engine){
-		this.engineUri=engine;
-	}
-
 	//get the results of the search and set index for imgs
 	getResults(){
 		return  new Promise((resolve,reject)=>{
 			var searchEngine=document.URL;
-			var value="";
-			var ind1,ind2;//index to know wich img put
-			var urls;
+			var urlsValInd
 			if(searchEngine.match('https://www.google')){
-					value=document.getElementsByClassName("gLFyf gsfi")[0].value;
-					ind1=1;ind2=2;
-					urls = this.solveRes.googleUris();
+					this.engine = new Google();
 			}else{
 				if(searchEngine.match('https://www.bing')){
-					ind1=0;ind2=2;
-					value=document.getElementById('sb_form_q').value
-					urls = this.solveRes.bingUris();
+					this.engine = new Bing();
 				}
 				else{
-					ind1=0;ind2=1;
-    				value=document.getElementById('search_form_input').value
-					urls = this.solveRes.duckUris();
+					this.engine = new Duck()
 				}
 			}
-			resolve([urls,value,searchEngine,ind1,ind2]);//urls, what user searhc,engine, index for img
+			urlsValInd =this.engine.getUrls()
+			resolve([urlsValInd[3],[urlsValInd[0],searchEngine,[urlsValInd[1],[urlsValInd[2]]);//urls, what user searhc,engine, index for img
 		});
 	}
 
@@ -354,15 +387,14 @@ var pageManager = new ContentPageManager();
 pageManager.init();
 var peer=0;
 var resultGoogBingDuck; 
-pageManager.getResults().then(requ=>{  //get the results from the users search 
-		pageManager.setEngineUri(requ[2]); //set engine url 
+pageManager.getResults().then(requ=>{  //get the results from the users search  
 		browser.runtime.sendMessage({	//call background for results in the other 2 engines
 				"call": "searchNewRequest",
 				"args": {req: requ[1],	// search value
 						engine: requ[2]}  //engine
 		}).then( requests=>{
-					pageManager.allRequests(requests,imagesFiles[requ[3]],imagesFiles[requ[4]],requ[0],requ[2]);
-					resultGoogBingDuck = pageManager.getArrays(requests,requ[0],requ[2]);
+					pageManager.allRequests(requests,imagesFiles[requ[3]],imagesFiles[requ[4]],requ[0]);
+					resultGoogBingDuck = pageManager.getArrays(requests,requ[0]);
 					browser.runtime.sendMessage({
 						"call": "getResultsFromPeers"
 					});
